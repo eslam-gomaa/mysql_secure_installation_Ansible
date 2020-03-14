@@ -8,10 +8,13 @@
 
 An **Idempotent** Ansible Module that provides the functions of `mysql_secure_installation`
 
-- Change MySQL Root Password - for a list of hosts i.e `localhost`, `127.0.0.1`, `::1`, .etc.
-- Remove Anonymous User
-- Disallow Root Login Remotely
-- Remove Test Database
+💎 Change MySQL Root Password - for a list of hosts i.e `localhost`, `127.0.0.1`, `::1`, .etc.
+
+💎Remove Anonymous User
+
+💎Disallow Root Login Remotely
+
+💎Remove Test Database
 
 
 

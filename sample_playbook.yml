@@ -41,10 +41,10 @@
         name: python-pip
         state: latest
 
-    - name: Install the Python MySQLB module
+    - name: Install the MySQL-Python Library
       pip: name=MySQL-python
 
-    - name: test mysql_secure_installation
+    - name: use "mysql_secure_installation" for Fresh MySQL Installation
       mysql_secure_installation:
         login_password: ''
         new_password: password22
