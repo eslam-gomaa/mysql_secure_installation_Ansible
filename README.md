@@ -27,7 +27,7 @@ An **Idempotent** Ansible Module that provides the functions of `mysql_secure_in
 
 💎 Please take a look 👓 at [sample_playbook.yml](https://github.com/Eslam-Naser/mysql_secure_installation_Ansible/blob/master/sample_playbook.yml), where you will find a full example of Installing MySQL & using `mysql_secure_installation` Ansible Module
 
-* make sure the `MySQL-python` Python Library’s Installation is handled by your Playbook code, An Example Is provided in `sample_playbook.yml`
+> Make sure the `MySQL-python` Python Library’s Installation is handled by your Playbook code, An Example Is provided in `sample_playbook.yml`
 
 
 
@@ -66,7 +66,7 @@ cp mysql_secure_installation library/
     remove_test_db: true
   register: mysql_secure
   
-  # To see more detailed output
+  # To see detailed output
   - debug:
     var: mysql_secure
 ```
@@ -111,13 +111,31 @@ cp mysql_secure_installation library/
 
 
 
+---
+
+
+
+## Debug Output 👓
+
+
+
+* If the `login_password` is correct, will change it to the `new_password`
+* if the `new_password` is correct, then the *desired state* is met
+
+* **Note** `->` The Module throughs a `Warning` instead of an `Error` if the both the *login_password* &  *new_password* are incorrect
+
+| Code | Meaning   | Description                                                  |
+| ---- | --------- | ------------------------------------------------------------ |
+| 0    | `Success` | When repeat –> `meet the desired state`                      |
+| 1    | `Fail`    | **`change_root_pwd`** - will output `1` if failed to change the password of at least 1 host, for more info check `hosts_success` & `hosts_failed` |
+
 
 
 ---
 
 
 
-* Read the Module’s Documentation
+#### Read the Module’s Documentation
 
 ```bash
 cd mysql_secure_installation_Ansible
