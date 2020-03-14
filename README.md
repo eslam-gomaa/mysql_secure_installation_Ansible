@@ -138,7 +138,9 @@ cp mysql_secure_installation library/
 #### Read the Module’s Documentation
 
 ```bash
-cd mysql_secure_installation_Ansible
+cd playbook_directory
+# OR
+cd role_directory
 ansible-doc -M library mysql_secure_installation -v
 ```
 
