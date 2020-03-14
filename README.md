@@ -29,7 +29,9 @@ An **Idempotent** Ansible Module that provides the functions of `mysql_secure_in
 
 
 
-* To use a custom Ansible Module:
+---
+
+* **To use a custom Ansible Module:**
   *  create a directory called `library` in your `playbook` or your `role` directory
 
 ```bash
@@ -39,6 +41,10 @@ cd my_playbook_folder
 mkdir library
 cp mysql_secure_installation library/
 ```
+
+
+
+---
 
 
 
