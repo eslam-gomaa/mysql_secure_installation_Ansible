@@ -55,7 +55,7 @@ cp mysql_secure_installation library/
 ```yaml
 - name: test mysql_secure_installation
   mysql_secure_installation:
-    login_password: password
+    login_password: ''
     new_password: password22
     user: root
     login_host: localhost
@@ -64,7 +64,11 @@ cp mysql_secure_installation library/
     remove_anonymous_user: true
     disallow_root_login_remotely: true
     remove_test_db: true
-  register: secure
+  register: mysql_secure
+  
+  # To see more detailed output
+  - debug:
+    var: mysql_secure
 ```
 
 
@@ -83,7 +87,6 @@ cp mysql_secure_installation library/
     remove_anonymous_user: true
     disallow_root_login_remotely: true
     remove_test_db: true
-  register: secure
 ```
 
 

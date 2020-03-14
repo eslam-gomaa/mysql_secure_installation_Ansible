@@ -105,7 +105,6 @@ EXAMPLES = '''
     remove_anonymous_user: true
     disallow_root_login_remotely: true
     remove_test_db: true
-  register: secure
 '''
 
 RETURN = '''
