@@ -115,14 +115,14 @@ cp mysql_secure_installation library/
 
 
 
-## Debug Output 👓
+## Debug Output
 
 
 
 * If the `login_password` is correct, will change it to the `new_password`
 * if the `new_password` is correct, then the *desired state* is met
 
-* **Note** `->` The Module throughs a `Warning` instead of an `Error` if the both the *login_password* &  *new_password* are incorrect
+* **Note:**  The Module throws a `Warning` instead of an `Error` if the both the `login_password` &  `new_password` are incorrect
 
 | Code | Meaning   | Description                                                  |
 | ---- | --------- | ------------------------------------------------------------ |
