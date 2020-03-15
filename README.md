@@ -41,7 +41,7 @@ cd my_playbook_folder
 # OR
 # cd my_role_folder
 mkdir library
-cp mysql_secure_installation library/
+cp mysql_secure_installation.py library/
 ```
 
 
@@ -83,10 +83,6 @@ cp mysql_secure_installation library/
     user: root
     login_host: localhost
     hosts: ['localhost', '127.0.0.1', '::1']
-    change_root_password: true
-    remove_anonymous_user: true
-    disallow_root_login_remotely: true
-    remove_test_db: true
 ```
 
 
@@ -147,4 +143,8 @@ ansible-doc -M library mysql_secure_installation -v
 
 
 
+
+Thank you
+
+[Eslam Gomaa](https://www.linkedin.com/in/eslam-gomaa/)
 
