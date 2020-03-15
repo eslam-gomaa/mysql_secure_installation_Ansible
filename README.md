@@ -66,8 +66,8 @@ cp mysql_secure_installation.py library/
     remove_test_db: true
   register: mysql_secure
   
-  # To see detailed output
-  - debug:
+# To see detailed output
+- debug:
     var: mysql_secure
 ```
 
