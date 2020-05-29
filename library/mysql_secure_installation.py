@@ -146,6 +146,7 @@ stderr:
 #######################
 ############
 import MySQLdb as mysql
+from itertools import chain
 
 def check_mysql_connection(host, user, password=''):
     """
@@ -197,16 +198,21 @@ def mysql_secure_installation(login_password, new_password, user='root',login_ho
                 info['remove_anonymous_user'] = 0
 
     def remove_testdb(cursor):
-        def search_tuple(tups, elem):
-            return filter(lambda tup: elem in tup, tups)
         if remove_test_db:
             cursor.execute("show databases;")
             testdb = cursor.fetchall()
-            if search_tuple(testdb, 'test'):
+            if 'test' in list(chain.from_iterable(testdb)): # if database "test" exists in the "db's list"
                 cursor.execute("drop database test;")
+
+                cursor.execute("show databases;") # Test if the "test" db deleted
+                check_test_db = cursor.fetchall()
+                if 'test' in list(chain.from_iterable(check_test_db)): # return 1 if the db still exists
+                    info['remove_test_db'] = 1
+                else:
+                    info['remove_test_db'] = 0
+            else: # means "test" db does not exist
                 info['remove_test_db'] = 0
-            else:
-                info['remove_test_db'] = 0
+
 
     def disallow_root_remotely(cursor):
         if disallow_root_login_remotely:
@@ -215,7 +221,13 @@ def mysql_secure_installation(login_password, new_password, user='root',login_ho
             if len(remote) >= 1:
                 cursor.execute("DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');")
                 cursor.execute("flush privileges;")
-                info['disallow_root_remotely'] = 0
+
+                cursor.execute("select user, host from mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');")
+                check_remote = cursor.fetchall()
+                if len(check_remote) >= 1: # test
+                    info['disallow_root_remotely'] = 1
+                else:
+                    info['disallow_root_remotely'] = 0
             else:
                 info['disallow_root_remotely'] = 0
 
