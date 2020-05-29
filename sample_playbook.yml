@@ -2,7 +2,7 @@
 # Sample Playbook to install MySQL & use "mysql_secure_installation" Ansible Module
 
 - name: Install & Secure MySQL
-  hosts: localhost, ubuntu
+  hosts: database
   become: true
   tasks:
     - name: Install Mariadb
@@ -29,6 +29,15 @@
         state: latest
       when: ansible_os_family == 'RedHat'
 
+    - name: Install mysql-python Dependencies
+      yum:
+        name:
+          - mysql-devel
+          - python-devel
+          - gcc
+        state: present
+      when: ansible_os_family == 'RedHat'
+
     - name: Start Mariadb Service
       service:
         name: mariadb
@@ -36,7 +45,7 @@
         enabled: true
       when: ansible_os_family == 'RedHat'
 
-    - name: pip
+    - name: pip  # Might need to install "epel-release" on Redhat OS Family -- installation of EPEL is up to you
       package:
         name: python-pip
         state: latest
