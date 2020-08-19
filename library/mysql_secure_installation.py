@@ -239,7 +239,7 @@ def mysql_secure_installation(login_password, new_password, user='root',login_ho
             cursor.execute("SELECT host, user, password, plugin FROM mysql.user where User='{}' LIMIT 0,1;".format(user))
             socket_exists = cursor.fetchall()
             if 'unix_socket' in list(chain.from_iterable(socket_exists)):
-                cursor.execute("UPDATE mysql.user SET plugin = '' WHERE user = {};".format(user))
+                cursor.execute("UPDATE mysql.user SET plugin = '' WHERE user = '{}';".format(user))
 
             remove_anon_user(cursor)
             remove_testdb(cursor)
