@@ -19,7 +19,7 @@
         - python-dev
         - libmysqlclient-dev
         - gcc
-      Ubuntu_8_Extra_Packages:
+      Ubuntu_20_Extra_Packages:
         - python3-pip
         - python3-dev
       Mariadb_Service: "{{ 'mariadb' if ansible_os_family == 'RedHat' else 'mysql'}}"
@@ -63,7 +63,7 @@
 
     - name: Install Extra Package for Debian OS Family
       apt:
-        name: "{{ Ubuntu_8_Extra_Packages }}"
+        name: "{{ Ubuntu_20_Extra_Packages }}"
         state: present
       when: ansible_os_family == ansible_os_family == 'Debian' and ansible_distribution_major_version == '20'
 
