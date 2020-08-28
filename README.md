@@ -25,7 +25,7 @@ An **Idempotent** Ansible Module that provides the functions of `mysql_secure_in
 
 
 
-💎 Please take a look 👓 at [sample_playbook.yml](https://github.com/Eslam-Naser/mysql_secure_installation_Ansible/blob/master/sample_playbook.yml), where you will find a full example of Installing MySQL & using `mysql_secure_installation` Ansible Module
+💎 Please take a look 👓 at [sample-playbook.yml](https://github.com/Eslam-Naser/mysql_secure_installation_Ansible/blob/master/sample_playbook.yml), where you will find a full example of Installing MySQL & using `mysql_secure_installation` Ansible Module
 
 > Make sure the `MySQL-python` Python Library’s Installation is handled by your Playbook code, An Example Is provided in `sample_playbook.yml`
 
