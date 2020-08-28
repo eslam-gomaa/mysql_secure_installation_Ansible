@@ -1,0 +1,88 @@
+---
+# Sample Playbook to install MySQL & use "mysql_secure_installation" Ansible Module
+
+- name: Install & Secure MySQL
+  hosts: db_servers
+  user: root
+  become: true
+  vars:
+    RedHat_Packages:
+      - "{{ 'python2-devel' if ansible_distribution_major_version == '8' and ansible_os_family == 'RedHat' else python-devel}}"
+      - gcc
+      - mysql-devel  #  Alternative (NOT Tested) -- yum install mariadb-devel
+      - mariadb-server
+      - mariadb
+    RedHat_8_Extra_Packages:
+      - python3-pip
+      - python3-devel
+    Ubuntu_Packages:
+      - mariadb-server
+      - python-dev
+      - libmysqlclient-dev
+      - gcc
+    Mariadb_Service: "{{ 'mariadb' if ansible_os_family == 'RedHat' else mysql}}"
+  tasks:
+    - name: Install Mariadb
+      apt:
+        name:
+          - mariadb-server
+          - python-dev
+          - libmysqlclient-dev
+        state: latest
+      when: ansible_os_family == 'Debian'
+
+    - name: Start Mysql Service
+      service:
+        name: mysql
+        state: started
+        enabled: true
+      when: ansible_os_family == 'Debian'
+
+    - name: Install Mariadb
+      yum:
+        name:
+          - mariadb-server
+          - mariadb
+        state: latest
+      when: ansible_os_family == 'RedHat'
+
+    - name: Install mysql-python Dependencies
+      yum:
+        name:
+          - mysql-devel
+          - python-devel
+          - gcc
+        state: present
+      when: ansible_os_family == 'RedHat'
+
+    - name: Start Mariadb Service
+      service:
+        name: mariadb
+        state: started
+        enabled: true
+      when: ansible_os_family == 'RedHat'
+
+    - name: pip  # Might need to install "epel-release" on Redhat OS Family -- installation of EPEL is up to you
+      package:
+        name: python-pip
+        state: latest
+
+    - name: Install the MySQL-Python Library
+      pip: name=MySQL-python
+
+    - name: use "mysql_secure_installation" for Fresh MySQL Installation
+      mysql_secure_installation:
+        login_password: ''
+        new_password: password22
+        user: root
+        login_host: localhost
+        hosts: ['localhost', '127.0.0.1', '::1']
+        change_root_password: true
+        remove_anonymous_user: true
+        disallow_root_login_remotely: true
+        remove_test_db: true
+      register: secure
+
+    - debug:
+        var: secure
+

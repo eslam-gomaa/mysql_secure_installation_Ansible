@@ -6,23 +6,23 @@
   user: root
   become: true
   vars:
-      RedHat_Packages:
-        - gcc
-        - mysql-devel  #  Alternative (NOT Tested) -- yum install mariadb-devel
-        - mariadb-server
-        - mariadb
-      RedHat_8_Extra_Packages:
-        - python3-pip
-        - python3-devel
-      Ubuntu_Packages:
-        - mariadb-server
-        - python-dev
-        - libmysqlclient-dev
-        - gcc
-      Ubuntu_20_Extra_Packages:
-        - python3-pip
-        - python3-dev
-      Mariadb_Service: "{{ 'mariadb' if ansible_os_family == 'RedHat' else 'mysql'}}"
+    RedHat_Packages:
+      - gcc
+      - mysql-devel  #  Alternative (NOT Tested) -- yum install mariadb-devel
+      - mariadb-server
+      - mariadb
+    RedHat_8_Extra_Packages:
+      - python3-pip
+      - python3-devel
+    Ubuntu_Packages:
+      - mariadb-server
+      - python-dev
+      - libmysqlclient-dev
+      - gcc
+    Ubuntu_20_Extra_Packages:
+      - python3-pip
+      - python3-dev
+    Mariadb_Service: "{{ 'mariadb' if ansible_os_family and ansible_distribution_major_version >= '7'  else 'mysql'}}"
 
   tasks:
     - name: Update apt packages
@@ -33,65 +33,10 @@
         cache_valid_time: 86400 #One day
       when: ansible_os_family == 'Debian' and ansible_distribution_major_version == '20'
 
-    - name: Install python2
-      package:
-        name: python2
-        state: present
-
     - name: Install Mariadb and its Dependencies On Ubuntu or Centos
       package:
         name: "{{ RedHat_Packages if ansible_os_family == 'RedHat' else Ubuntu_Packages }}"
         state: present
-
-    - name: Install python2-devel on Redhat OS Family
-      yum:
-        name: 'python2-devel'
-        state: present
-      when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8'
-
-    - name: Install python-devel on Redhat OS Family
-      yum:
-        name: 'python-devel'
-        state: present
-      when: ansible_os_family == 'RedHat' and ansible_distribution_major_version < '8'
-
-    - name: Install Extra Package for Redhat OS Family
-      yum:
-        name: "{{ RedHat_8_Extra_Packages }}"
-        state: present
-      when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8'
-
-    - name: Install Extra Package for Debian OS Family
-      apt:
-        name: "{{ Ubuntu_20_Extra_Packages }}"
-        state: present
-      when: ansible_os_family == ansible_os_family == 'Debian' and ansible_distribution_major_version == '20'
-
-    - name: Pip Install "mysqlclient" Package for Redhat OS Family
-      pip:
-        name: mysqlclient
-        executable: pip-3
-      when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8'
-
-    - name: Pip Install "mysqlclient" Package for Debian OS Family
-      pip:
-        name: mysqlclient
-        executable: pip3
-      when: ansible_os_family == 'Debian' and ansible_distribution_major_version == '20'
-
-    - name: Create directory "/usr/include/mysql" (workaround for a bug)
-      file:
-        path: /usr/include/mysql/
-        state: directory
-        mode: '0755'
-      when: ansible_os_family == 'Debian' or 'RedHat'
-
-    - name: download mysql.h (workaround for a bug)
-      get_url:
-        url: https://raw.githubusercontent.com/paulfitz/mysql-connector-c/master/include/my_config.h
-        dest: /usr/include/mysql/my_config.h
-        mode: '0440'
-      when: ansible_os_family == 'Debian' or 'RedHat'
 
     - name: Start Mysql Service
       service:
@@ -99,22 +44,7 @@
         state: started
         enabled: true
 
-
-    ### In Case you need to install pip2 ###
-
-    - name: Download get-pip.py (Testing ...)
-      get_url:
-        url: https://bootstrap.pypa.io/get-pip.py # --output get-pip.py
-        dest: /tmp/get-pip.py
-        mode: '0440'
-
-    - name: Installing pip2 (Testing ...)
-      command: python2 /tmp/get-pip.py
-
-    - name: Install the MySQL-Python Library
-      pip:
-        name: MySQL-python
-        executable: pip2.7
+    - import_tasks: mysql-python_dependencies.yml
 
     - name: use "mysql_secure_installation" for Fresh MySQL Installation
       mysql_secure_installation:
