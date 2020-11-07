@@ -2,7 +2,7 @@
 # Sample Playbook to install MySQL & use "mysql_secure_installation" Ansible Module
 
 - name: Install & Secure MySQL
-  hosts: ubuntu #db_servers
+  hosts: db
   user: root
   become: true
   vars:
@@ -31,7 +31,7 @@
         upgrade: no
         update_cache: yes
         cache_valid_time: 86400 #One day
-      when: ansible_os_family == 'Debian' and ansible_distribution_major_version == '20'
+      when: ansible_os_family == 'Debian' #and ansible_distribution_major_version == '20'
 
     - name: Install Mariadb and its Dependencies On Ubuntu or Centos
       package:
