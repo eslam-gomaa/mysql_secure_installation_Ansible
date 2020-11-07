@@ -60,16 +60,16 @@
 
 ### In Case you need to install pip2 ###
 
-#- name: Download get-pip.py (Testing ...)
-# get_url:
-#    url: https://bootstrap.pypa.io/get-pip.py # --output get-pip.py
-#    dest: /tmp/get-pip.py
-#    mode: '0440'
+- name: Download get-pip.py (Testing ...)
+  get_url:
+    url: https://bootstrap.pypa.io/get-pip.py # --output get-pip.py
+    dest: /tmp/get-pip.py
+    mode: '0440'
 
-#- name: Installing pip2 (Testing ...)
-#  command: python2 /tmp/get-pip.py
+- name: Installing pip2 (Testing ...)
+  command: python2 /tmp/get-pip.py
 
-#- name: Install the MySQL-Python Library
-#  pip:
-#    name: MySQL-python
-#    executable: pip2.7
+- name: Install the MySQL-Python Library
+  pip:
+    name: MySQL-python
+    executable: pip2.7
