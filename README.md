@@ -130,7 +130,8 @@ Some distros are not tested yet, but they'll be soon.
 | ------------------------------ | --------------------------   |
 | Centos 6                       |            ⏱️                |
 | Centos 7                       |            🆗                |
-| Centos 8                       |            ⏱️                |
+| Centos 8                       |            🆗                |
+| fedora-34                      |            NOT yet                |
 | Debian 10 (buster)             |            🆗                |
 | Ubuntu 16.04                   |            ⏱                |
 | Ubuntu 18.04                   |            🆗                |

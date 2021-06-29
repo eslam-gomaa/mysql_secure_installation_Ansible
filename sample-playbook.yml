@@ -22,7 +22,8 @@
     Ubuntu_20_Extra_Packages:
       - python3-pip
       - python3-dev
-    Mariadb_Service: "{{ 'mariadb' if ansible_os_family and ansible_distribution_major_version >= '7'  else 'mysql'}}"
+    Mariadb_Service: "{{ 'mariadb' if ansible_os_family == 'RedHat'  else 'mysql'}}"
+
 
   tasks:
     - name: Update apt packages
