@@ -145,7 +145,8 @@ stderr:
 ##############################################
 #######################
 ############
-import MySQLdb as mysql
+#import MySQLdb as mysql
+import pymysql as mysql
 from itertools import chain
 
 def check_mysql_connection(host, user, password=''):

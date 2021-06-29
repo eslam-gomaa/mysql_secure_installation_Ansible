@@ -2,8 +2,8 @@
 # Sample Playbook to install MySQL & use "mysql_secure_installation" Ansible Module
 
 - name: Install & Secure MySQL
-  hosts: db
-  user: root
+  hosts: db_test
+  user: vagrant
   become: true
   vars:
     RedHat_Packages:
@@ -17,7 +17,7 @@
     Ubuntu_Packages:
       - mariadb-server
       - python-dev
-      - libmysqlclient-dev
+        #- libmysqlclient-dev
       - gcc
     Ubuntu_20_Extra_Packages:
       - python3-pip

@@ -22,42 +22,42 @@
       - python3-pymysql
       - python-pymysql
     state: present
-#
-#- name: Install python2-devel on Redhat OS Family
-#  yum:
-#    name: 'python2-devel'
-#    state: present
-#  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8'
-#
-#- name: Install python-devel on Redhat OS Family
-#  yum:
-#    name: 'python-devel'
-#    state: present
-#  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version < '8'
-#
-#- name: Install Extra Package for Redhat OS Family
-#  yum:
-#    name: "{{ RedHat_8_Extra_Packages }}"
-#    state: present
-#  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8'
-#
-#- name: Install Extra Package for Debian OS Family
-#  apt:
-#    name: "{{ Ubuntu_20_Extra_Packages }}"
-#    state: present
-#  when: ansible_os_family == ansible_os_family == 'Debian' and ansible_distribution_major_version >= '19'
-#
-#- name: Pip Install "mysqlclient" Package for Redhat OS Family
-#  pip:
-#    name: mysqlclient
-#    executable: pip-3
-#  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8'
-#
-#- name: Pip Install "mysqlclient" Package for Debian OS Family
-#  pip:
-#    name: mysqlclient
-#    executable: pip3
-#  when: ansible_os_family == 'Debian' and ansible_distribution_major_version >= '19'
+
+- name: Install python2-devel on Redhat OS Family
+  yum:
+    name: 'python2-devel'
+    state: present
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8'
+
+- name: Install python-devel on Redhat OS Family
+  yum:
+    name: 'python-devel'
+    state: present
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version < '8'
+
+- name: Install Extra Package for Redhat OS Family
+  yum:
+    name: "{{ RedHat_8_Extra_Packages }}"
+    state: present
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8'
+
+- name: Install Extra Package for Debian OS Family
+  apt:
+    name: "{{ Ubuntu_20_Extra_Packages }}"
+    state: present
+  when: ansible_os_family == ansible_os_family == 'Debian' and ansible_distribution_major_version >= '19'
+
+- name: Pip Install "mysqlclient" Package for Redhat OS Family
+  pip:
+    name: mysqlclient
+    executable: pip-3
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8'
+
+- name: Pip Install "mysqlclient" Package for Debian OS Family
+  pip:
+    name: mysqlclient
+    executable: pip3
+  when: ansible_os_family == 'Debian' and ansible_distribution_major_version >= '19'
 
 - name: Create directory "/usr/include/mysql" (workaround for a bug)
   file:
