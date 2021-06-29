@@ -171,9 +171,11 @@ ansible-doc -M library mysql_secure_installation -v
 
 ---
 
-## Leave a ⭐ if you found it useful
+.
 
+### Please leave a ⭐ if you found it useful
 
+.
 
 Thank you
 
