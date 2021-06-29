@@ -4,19 +4,28 @@
 - name: Install python2
   package:
     name: python2
+    state: present
   ignore_errors: yes
 
 - name: Install python3
   package:
     name: python3
-    state: absent
+    state: present
 
-- name: Install python-pymysql
+- name: Install python-pymysql on Debian family
   package:
     name:
       - python3-pymysql
       - python-pymysql
-    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: Install python-pymysql on Rdhat family
+  package:
+    name:
+      - python36-PyMySQL
+      - python2-PyMySQL
+  when: ansible_os_family == 'RedHat'
+
 
 - name: Create directory "/usr/include/mysql" (workaround for a bug)
   file:
