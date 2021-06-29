@@ -175,6 +175,7 @@ def runcommand(cmd):
 # Get socket path
 socket_path = runcommand('mysqladmin variables | grep -w "sock" |  xargs | cut -d " " -f 4')
 connected_with_socket = False
+connected = False
 
 
 def check_mysql_connection(host, user, password='', unix_socket=True):
@@ -277,6 +278,7 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
                 info['disallow_root_remotely'] = "False -- meets the desired state"
 
     if check_mysql_connection(host=login_host, user=user, password=login_password, unix_socket=True):
+        connected = True
         try:
             if connected_with_socket:
                 connection = mysql.connect(host=login_host, user=user, passwd=login_password, db='mysql',
@@ -342,6 +344,7 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
             info['stderr'] = e
 
     elif check_mysql_connection(host=login_host, user=user, password=new_password, unix_socket=True):
+        connected = True
         if connected_with_socket:
             connection = mysql.connect(host=login_host, user=user, passwd=new_password, db='mysql',
                                        unix_socket=socket_path['stdout'])
@@ -385,6 +388,7 @@ def main():
         "remove_anonymous_user": {"type": "bool", "default": True, "choices": [True, False]},
         "disallow_root_login_remotely": {"type": "bool", "default": False, "choices": [True, False]},
         "remove_test_db": {"type": "bool", "default": True, "choices": [True, False]},
+        "disable_unix_socket": {"type": "bool", "default": True, "choices": [True, False]}
     }
 
     module = AnsibleModule(argument_spec=fields)
@@ -397,11 +401,11 @@ def main():
                                     change_root_password=module.params['change_root_password'],
                                     remove_anonymous_user=module.params['remove_anonymous_user'],
                                     disallow_root_login_remotely=module.params['disallow_root_login_remotely'],
-                                    remove_test_db=module.params['remove_test_db'])
+                                    remove_test_db=module.params['remove_test_db'],
+                                    disable_unix_socket=module.params['disable_unix_socket'])
 
-    if run["change_root_pwd"] == 1 and len(run["hosts_failed"]) == 0:
-        module.warn(
-            'mysql_secure_installation --> Neither the provided old passwd nor the new passwd are correct -- Skipping')
+    if not connected:
+        module.warn('mysql_secure_installation --> Neither the provided old passwd nor the new passwd are correct -- Skipping')
 
     if len(run["hosts_success"]) >= 1:
         changed_ = True
