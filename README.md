@@ -2,6 +2,31 @@
 
 # mysql_secure_installation_Ansible
 
+# ✋ Wait a second !
+
+This module has been refactored to get rid of the dependencies issue across distributions, And it's much simpler now.
+
+
+### Updates
+
+- [x] use `pymysql` lib instead of `MySQLdb 👎`
+- [x] Enable authentication with unix_socket
+  * Logic:
+    * If socket is found, try to login with socket
+       * If not able to login with socket, login with user/password
+- [x] Add an option to disable unix_socket
+- [x] make the output more understandable
+
+
+### To do,
+
+- [ ] Update the module doc
+- [ ] Test with more distributions
+
+
+
+---
+
 
 
 ## Features
@@ -12,6 +37,7 @@ An **Idempotent** Ansible Module that provides the functions of `mysql_secure_in
 - Remove Anonymous User
 - Disallow Root Login Remotely
 - Remove Test Database
+- disable unix_socket
 
 💎 The Module is **Idempotent** Means that when you run it again, will not re-execute the commands *If the desired state meets the current state*
 
@@ -104,6 +130,7 @@ cp mysql_secure_installation.py library/
 | `remove_anonymous_user`        |                                                              | True          | Boolean |
 | `disallow_root_login_remotely` |                                                              | False         | Boolean |
 | `remove_test_db`               |                                                              | True          | Boolean |
+| `disable_unix_socket`          | Disable login with unix_socket                               | False          | Boolean |
 
 
 
@@ -139,8 +166,6 @@ cd playbook_directory
 cd role_directory
 ansible-doc -M library mysql_secure_installation -v
 ```
-
-
 
 
 
