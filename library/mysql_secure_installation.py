@@ -175,8 +175,7 @@ def runcommand(cmd):
 # Get socket path
 socket_path = runcommand('mysqladmin variables | grep -w "sock" |  xargs | cut -d " " -f 4')
 connected_with_socket = False
-connected = False
-
+pasword_incorrect_warn = False
 
 def check_mysql_connection(host, user, password='', unix_socket=True):
     """
@@ -193,7 +192,6 @@ def check_mysql_connection(host, user, password='', unix_socket=True):
                 try:
                     mysql.connect(host=host, user=user, passwd=password, unix_socket=socket_path['stdout'])
                     connected_with_socket = True
-                    connected = True
                     return True
                 # except mysql.err.InternalError:
                 except:
@@ -359,6 +357,7 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
     else:
         info['change_root_pwd'] = False
         info['stdout'] = 'Neither the provided old passwd nor the new passwd are correct'
+        pasword_incorrect_warn = True
     return info
 
 
@@ -403,7 +402,7 @@ def main():
                                     remove_test_db=module.params['remove_test_db'],
                                     disable_unix_socket=module.params['disable_unix_socket'])
 
-    if not connected:
+    if pasword_incorrect_warn:
         module.warn('mysql_secure_installation --> Neither the provided old passwd nor the new passwd are correct -- Skipping')
 
     if len(run["hosts_success"]) >= 1:
