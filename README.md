@@ -117,7 +117,7 @@ cp mysql_secure_installation.py library/
 
 
 
-## Input 👓
+## Input
 
 | :Param                         | :Description                                                 | :Default      | :Type   |
 | ------------------------------ | ------------------------------------------------------------ | ------------- | ------- |
@@ -142,15 +142,7 @@ cp mysql_secure_installation.py library/
 
 
 
-* If the `login_password` is correct, will change it to the `new_password`
-* if the `new_password` is correct, then the *desired state* is met
-
 * **Note:**  The Module throws a `Warning` instead of an `Error` if the both the `login_password` &  `new_password` are incorrect
-
-| Code | Meaning   | Description                                                  |
-| ---- | --------- | ------------------------------------------------------------ |
-| 0    | `Success` | When repeat –> `meet the desired state`                      |
-| 1    | `Fail`    | **`change_root_pwd`** - will output `1` if failed to change the password of at least 1 host, for more info check `hosts_success` & `hosts_failed` |
 
 
 
