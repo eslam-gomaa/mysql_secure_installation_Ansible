@@ -2,6 +2,9 @@
 
 # mysql_secure_installation_Ansible
 
+
+.
+
 # ✋ Wait a second !
 
 This module has been refactored to get rid of the dependencies issue across distributions, And it's much simpler now.
@@ -50,10 +53,12 @@ An **Idempotent** Ansible Module that provides the functions of `mysql_secure_in
 ## Usage
 
 
+💎 A full sample is provided at [sample-playbook.yml](https://github.com/eslam-gomaa/mysql_secure_installation_Ansible/blob/master/sample-playbook.yml) which installs MySQL on `Centos 7` or `Debian buster` 
 
-💎 Please take a look 👓 at [sample-playbook.yml](https://github.com/eslam-gomaa/mysql_secure_installation_Ansible/blob/master/sample-playbook.yml), where you will find a full example of Installing MySQL & using `mysql_secure_installation` Ansible Module
-
-> Make sure the `MySQL-python` Python Library’s Installation is handled by your Playbook code, An Example Is provided in `sample_playbook.yml`
+```bash
+# Modify the hosts
+ansible-playbook sample-playbook.yml
+```
 
 
 
@@ -130,7 +135,7 @@ cp mysql_secure_installation.py library/
 | `remove_anonymous_user`        |                                                              | True          | Boolean |
 | `disallow_root_login_remotely` |                                                              | False         | Boolean |
 | `remove_test_db`               |                                                              | True          | Boolean |
-| `disable_unix_socket`          | Disable login with unix_socket                               | False          | Boolean |
+| `disable_unix_socket`          | Disable login with unix_socket                               | False         | Boolean |
 
 
 
@@ -141,8 +146,13 @@ cp mysql_secure_installation.py library/
 ## Debug Output
 
 
-
 * **Note:**  The Module throws a `Warning` instead of an `Error` if the both the `login_password` &  `new_password` are incorrect
+
+#### Sample output
+
+![image](https://user-images.githubusercontent.com/33789516/123868353-dda1f080-d92f-11eb-9402-acac14be4474.png)
+
+![image](https://user-images.githubusercontent.com/33789516/123868361-e0044a80-d92f-11eb-91c4-991e76c08aaf.png)
 
 
 
@@ -159,9 +169,13 @@ cd role_directory
 ansible-doc -M library mysql_secure_installation -v
 ```
 
+---
+
+## Leave a ⭐ if you found it useful
+
 
 
 Thank you
 
-[Eslam Gomaa](https://www.linkedin.com/in/eslam-gomaa/)
+Maintainer: [Eslam Gomaa](https://www.linkedin.com/in/eslam-gomaa/)
 
