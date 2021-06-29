@@ -120,6 +120,21 @@ cp mysql_secure_installation.py library/
 
 ---
 
+## Test
+
+After refactoring, It's needed to re-test with all the common distributions
+
+Some distros are not tested yet, but they'll be soon.
+
+| :Distribution                         | :Test result                 |
+| ------------------------------ | --------------------------   |
+| Centos 6                       |            ⏱️                |
+| Centos 7                       |            🆗                |
+| Centos 8                       |            ⏱️                |
+| Debian 10 (buster)             |            🆗                |
+| Ubuntu 16.04                   |            ⏱                |
+| Ubuntu 18.04                   |            🆗                |
+| Ubuntu 20.04                   |            ⏱                |
 
 
 ## Input
