@@ -193,6 +193,7 @@ def check_mysql_connection(host, user, password='', unix_socket=True):
                 try:
                     mysql.connect(host=host, user=user, passwd=password, unix_socket=socket_path['stdout'])
                     connected_with_socket = True
+                    connected = True
                     return True
                 # except mysql.err.InternalError:
                 except:
@@ -278,7 +279,6 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
                 info['disallow_root_remotely'] = "False -- meets the desired state"
 
     if check_mysql_connection(host=login_host, user=user, password=login_password, unix_socket=True):
-        connected = True
         try:
             if connected_with_socket:
                 connection = mysql.connect(host=login_host, user=user, passwd=login_password, db='mysql',
@@ -344,7 +344,6 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
             info['stderr'] = e
 
     elif check_mysql_connection(host=login_host, user=user, password=new_password, unix_socket=True):
-        connected = True
         if connected_with_socket:
             connection = mysql.connect(host=login_host, user=user, passwd=new_password, db='mysql',
                                        unix_socket=socket_path['stdout'])
