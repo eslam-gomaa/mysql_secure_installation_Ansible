@@ -180,8 +180,37 @@ After refactoring, It's needed to re-test with all the common distributions, Som
 
 
 
----
 
+---
+.
+
+## Known issues
+
+
+If you face this, don't worry it's NOT an issue, the problem is that `python-pymysql` might has a different name on the distro you're using
+
+You'll probably face this if you are using a non [tested](https://github.com/eslam-gomaa/mysql_secure_installation_Ansible#test) distribution
+
+```bash
+No package matching 'python*-pymysql' is available
+```
+
+![image](https://user-images.githubusercontent.com/33789516/123947208-6bb5bf80-d9a0-11eb-98b1-9e7b89afe2de.png)
+
+### Fix
+
+Just Update `pymysql` package name with the correct name in the playbook
+
+
+![image](https://user-images.githubusercontent.com/33789516/123947630-e088f980-d9a0-11eb-9d4a-b300fd9a22cd.png)
+
+
+### Extra mile
+ 
+It is much appreciated ♥️ if you share package name on your tested distribution either with opening an issue or a pull request.
+
+
+---
 
 
 #### Read the Module’s Documentation
