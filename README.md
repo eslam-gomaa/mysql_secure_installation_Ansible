@@ -61,7 +61,7 @@ This is NOT something to worry about, It is something to make sure it's meet if 
 ## Usage
 
 
-💎 A full sample is provided at [sample-playbook.yml](https://github.com/eslam-gomaa/mysql_secure_installation_Ansible/blob/master/sample-playbook.yml) which installs MySQL on `Centos 7` or `Debian buster` 
+💎 A full sample is provided at [sample-playbook.yml](https://github.com/eslam-gomaa/mysql_secure_installation_Ansible/blob/master/sample-playbook.yml) which installs & secures MySQL --  Workes on the [tested distributions](https://github.com/eslam-gomaa/mysql_secure_installation_Ansible#test) below
 
 ```bash
 # Modify the hosts
