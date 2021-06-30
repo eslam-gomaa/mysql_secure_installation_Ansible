@@ -145,7 +145,8 @@ stderr:
 ##############################################
 #######################
 ############
-# import MySQLdb as mysql
+# import MySQLdb as mysql  # deprecated
+import re
 import pymysql as mysql
 from itertools import chain
 import os
@@ -172,8 +173,17 @@ def runcommand(cmd):
     return info
 
 
+# Checking mysql version first, as Mariadb 10.4.x requires a different command to update user password.
+mysql_version_above_10_3 = False
+# Get MySQL Version
+mysql_version = runcommand('sudo mysqladmin version | grep -wi server | xargs | cut -d " " -f 3')
+mysql_version_n = re.findall("10.[0-9]", mysql_version['stdout'])
+if float(mysql_version_n[0]) >= 10.4:
+    mysql_version_above_10_3 = True
+
 # Get socket path
 socket_path = runcommand('mysqladmin variables | grep -w "sock" |  xargs | cut -d " " -f 4')
+
 connected_with_socket = False
 pasword_incorrect_warn = False
 
@@ -299,9 +309,21 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
                 pwd = {}
                 for host in hosts:
                     cursor.execute('use mysql;')
-                    cursor.execute(
-                        "update user set password=PASSWORD('{}') where User='{}' AND Host='{}';".format(new_password,
-                                                                                                        user, host))
+                    # Need to use SET PASSWORD starting from Mariadb 10.4
+                    # https://mariadb.com/kb/en/set-password/
+                    if mysql_version_above_10_3:
+                        # Will return an error if the host does NOT exist, so checking first.
+                        cursor.execute('select user, host, password from mysql.user where user="{}" and host="{}";'.format(user, host))
+                        data = cursor.fetchall()
+                        for d in data:
+                            if d[1] == host:
+                                cursor.execute(
+                                    "SET PASSWORD FOR '{}'@'{}' = PASSWORD('{}');".format(user, host, new_password))
+                    else:
+                        cursor.execute(
+                            "update user set password=PASSWORD('{}') where User='{}' AND Host='{}';".format(
+                                new_password,
+                                user, host))
                     cursor.execute('flush privileges;')
                     cursor.execute('select user, host, password from mysql.user where user="{}";'.format(user))
                     data = cursor.fetchall()
@@ -362,12 +384,13 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
     return info
 
 
+### Testing ###
 # check = check_mysql_connection('localhost', 'root', '', unix_socket=True)
 # print(check)
 #
 # print("")
 #
-# secure = mysql_secure_installation(login_password="password22", new_password='password22', hosts=['localhost', '127.0.0.1'], login_host='localhost', remove_test_db=True, disallow_root_login_remotely=True)
+# secure = mysql_secure_installation(login_password="", new_password='password22', hosts=['localhost', '127.0.0.1'], login_host='localhost', remove_test_db=True, disallow_root_login_remotely=True)
 # print(secure)
 ############
 #######################
