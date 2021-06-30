@@ -151,7 +151,6 @@ import pymysql as mysql
 from itertools import chain
 import os
 
-
 def runcommand(cmd):
     """
     function to execute shell commands and returns a dic of
@@ -174,17 +173,11 @@ def runcommand(cmd):
 
 # Checking mysql version first, as Mariadb 10.4.x requires a different command to update user password.
 mysql_version_above_10_3 = False
-# Get MySQL Version
-mysql_version = runcommand('sudo mysqladmin version | grep -wi server | xargs | cut -d " " -f 3')
-mysql_version_n = re.findall("10.[0-9]", mysql_version['stdout'])
-if float(mysql_version_n[0]) >= 10.4:
-    mysql_version_above_10_3 = True
-
 # Get socket path
 socket_path = runcommand('mysqladmin variables | grep -w "sock" |  xargs | cut -d " " -f 4')
-
 connected_with_socket = False
 pasword_incorrect_warn = False
+mysql_version = None
 
 def check_mysql_connection(host, user, password='', unix_socket=True):
     """
@@ -196,14 +189,15 @@ def check_mysql_connection(host, user, password='', unix_socket=True):
     """
 
     if unix_socket:
-        if socket_path['rc'] == 0:
+        if socket_path['stdout']:
             if os.path.exists(socket_path['stdout']):
                 try:
                     mysql.connect(host=host, user=user, passwd=password, unix_socket=socket_path['stdout'])
+                    global connected_with_socket
+                    connected_with_socket = True
                     return True
                 # except mysql.err.InternalError:
                 except:
-                    # return False
                     pass
     try:
         mysql.connect(host=host, user=user, passwd=password)
@@ -232,6 +226,8 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
         hosts = hosts.split(',')
     info = {'change_root_pwd': None, 'hosts_failed': [], 'hosts_success': [], 'remove_anonymous_user': None,
             'remove_test_db': None, 'disallow_root_remotely': None}
+
+
 
     def remove_anon_user(cursor):
         if remove_anonymous_user:
@@ -284,15 +280,26 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
             else:
                 info['disallow_root_remotely'] = "False -- meets the desired state"
 
+
     if check_mysql_connection(host=login_host, user=user, password=login_password, unix_socket=True):
-        connected_with_socket = True
         try:
-            if connected_with_socket:
+            if globals()['connected_with_socket']:
                 connection = mysql.connect(host=login_host, user=user, passwd=login_password, db='mysql',
                                            unix_socket=socket_path['stdout'])
+                mysql_version = runcommand('sudo mysqladmin version | grep -wi server | xargs | cut -d " " -f 3')
             else:
                 connection = mysql.connect(host=login_host, user=user, passwd=login_password, db='mysql')
+                mysql_version = runcommand(
+                    "sudo mysqladmin version -u {} -h {} -p{}| grep -wi server | xargs | cut -d ' ' -f 3".format(user,
+                                                                                                                 login_host,
+                                                                                                                 login_password))
             cursor = connection.cursor()
+
+            # Get MySQL Version
+            mysql_version_n = re.findall("[0-9].[0-9]", mysql_version['stdout'])
+            if float(mysql_version_n[0]) >= 10.4:
+                global mysql_version_above_10_3
+                mysql_version_above_10_3 = True
 
             if disable_unix_socket:
                 cursor.execute(
@@ -310,7 +317,7 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
                     cursor.execute('use mysql;')
                     # Need to use SET PASSWORD starting from Mariadb 10.4
                     # https://mariadb.com/kb/en/set-password/
-                    if mysql_version_above_10_3:
+                    if globals()['mysql_version_above_10_3']:
                         # Will return an error if the host does NOT exist, so checking first.
                         cursor.execute('select user, host, password from mysql.user where user="{}" and host="{}";'.format(user, host))
                         data = cursor.fetchall()
@@ -363,12 +370,12 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
             info['stderr'] = e
 
     elif check_mysql_connection(host=login_host, user=user, password=new_password, unix_socket=True):
-        connected_with_socket = True
-        if connected_with_socket:
+        if globals()['connected_with_socket']:
             connection = mysql.connect(host=login_host, user=user, passwd=new_password, db='mysql',
                                        unix_socket=socket_path['stdout'])
         else:
             connection = mysql.connect(host=login_host, user=user, passwd=new_password, db='mysql')
+
         cursor_ = connection.cursor()
         remove_anon_user(cursor_)
         remove_testdb(cursor_)
@@ -382,14 +389,13 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
         pasword_incorrect_warn = True
     return info
 
-
 ### Testing ###
 # check = check_mysql_connection('localhost', 'root', '', unix_socket=True)
 # print(check)
 #
 # print("")
 #
-# secure = mysql_secure_installation(login_password="", new_password='password22', hosts=['localhost', '127.0.0.1'], login_host='localhost', remove_test_db=True, disallow_root_login_remotely=True)
+# secure = mysql_secure_installation(login_password="password22", new_password='', hosts=['localhost', '127.0.0.1'], login_host='localhost', remove_test_db=True, disallow_root_login_remotely=True)
 # print(secure)
 ############
 #######################
