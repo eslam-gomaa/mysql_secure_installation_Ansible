@@ -134,16 +134,16 @@ After refactoring, It's needed to re-test with all the common distributions, Som
 
 💎 I'll be more than happen when you let me know if you faced an error ! 
 
-| :Distribution                         | :Test result          |
-| ------------------------------ | --------------------------   |
-| Centos 6                       |            ⏱️                |
-| Centos 7                       |            🆗                |
-| Centos 8                       |            🆗                |
-| fedora-34                      |            🆗                |
-| Debian 10 (buster)             |            🆗                |
-| Ubuntu 16.04                   |            ⏱                |
-| Ubuntu 18.04                   |            🆗                |
-| Ubuntu 20.04                   |            ⏱                |
+| :Distribution                         | :Test result          |  Comment |
+| ------------------------------ | --------------------------   |----------|
+| Centos 6                       |            ⏱️                |          |
+| Centos 7                       |            🆗                |          |
+| Centos 8                       |            🆗                |          |
+| fedora-34                      |            🆗                |          |
+| Debian 10 (buster)             |            🆗                |          |
+| Ubuntu 16.04                   |            🆗                | had to upgrade Ansible to a newer version (Related to example syntax NOT the module)|
+| Ubuntu 18.04                   |            🆗                |          |
+| Ubuntu 20.04                   |            ⏱                |          |
 
 
 ## Input
