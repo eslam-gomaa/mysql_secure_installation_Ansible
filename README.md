@@ -130,7 +130,7 @@ cp mysql_secure_installation.py library/
 
 ## Test
 
-After refactoring, It's needed to re-test with all the common distributions, Some distros are not tested yet, but they'll be soon.
+Below, is a list of the tested distributions
 
 💎 I'll be more than happen when you let me know if you faced an error ! 
 
@@ -143,7 +143,7 @@ After refactoring, It's needed to re-test with all the common distributions, Som
 | Debian 10 (buster)             |            🆗                |          |
 | Ubuntu 16.04                   |            🆗                | had to upgrade Ansible to a newer version (Related to example syntax NOT the module)|
 | Ubuntu 18.04                   |            🆗                |          |
-| Ubuntu 20.04                   |            ⏱                |          |
+| Ubuntu 20.04                   |            🆗                |          |
 
 
 ## Input
@@ -187,7 +187,7 @@ After refactoring, It's needed to re-test with all the common distributions, Som
 ## Known issues
 
 
-If you face this, don't worry it's NOT an issue, the problem is that `python-pymysql` might has a different name on the distro you're using
+If you face this, don't worry it's **NOT an issue**, the problem is that `python-pymysql` might has a different name on the distro you're using
 
 You'll probably face this if you are using a non [tested](https://github.com/eslam-gomaa/mysql_secure_installation_Ansible#test) distribution
 
