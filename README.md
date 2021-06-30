@@ -27,10 +27,9 @@ This module has been refactored to get rid of the dependencies issue across dist
 - [ ] Update the module doc
 - [ ] Test with more distributions
 - [ ] Thinking to test with the desired password first 🤔 ( `Changing password` will be updated if the script used `unix_socket` to login)
-
+- [ ] Validate that `disable_unix_socket` works well in MySQl version >= 1.4
 
 ---
-
 
 
 ## Features
