@@ -2,7 +2,7 @@
 # Sample Playbook to install MySQL & use "mysql_secure_installation" Ansible Module
 
 - name: Install & Secure MySQL
-  hosts: localhost
+  hosts: db-test
   user: vagrant
   become: true
   vars:
