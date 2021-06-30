@@ -1,10 +1,11 @@
 ---
 # Sample Playbook to install MySQL & use "mysql_secure_installation" Ansible Module
 
+# If python2 does NOT exist, Ansible will use python3
 - name: Install python2
   package:
     name: python2
-    state: present
+    state: absent
   ignore_errors: yes
 
 - name: Install python3
@@ -30,20 +31,20 @@
     name:
       - python36-PyMySQL
       - python2-PyMySQL
-  when: (ansible_os_family == 'RedHat' and ansible_distribution_major_version == | int == 7)
+  when: (ansible_os_family == 'RedHat' and ansible_distribution_major_version | int == 7)
 
 - name: Install python-pymysql on Rdhat family (8)
   package:
     name:
       - python3-PyMySQL
       - python2-PyMySQL
-  when: (ansible_os_family == 'RedHat' and ansible_distribution_major_version == | int == 8)
+  when: (ansible_os_family == 'RedHat' and ansible_distribution_major_version | int == 8)
 
 - name: Install python-pymysql on Fedora34
   package:
     name:
       - python3-PyMySQL
-  when: (ansible_os_family == 'RedHat' and ansible_distribution_major_version == | int == 34)
+  when: (ansible_os_family == 'RedHat' and ansible_distribution_major_version | int == 34)
 
 - name: Create directory "/usr/include/mysql" (workaround for a bug)
   file:
