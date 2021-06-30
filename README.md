@@ -53,8 +53,8 @@ An **Idempotent** Ansible Module that provides the functions of `mysql_secure_in
 
 This is NOT something to worry about, It is something to make sure it's meet if you faced an error
 
-1. `mysqladmin` command (already installed with MySQL/Mariadb)  -- Needed to get information such as `unix_socket` location & MySQL version
-2. `python-pymysql` which can be easily installed using the pkg manager e.g: apt, yum
+1. **mysqladmin** command (already installed with MySQL/Mariadb)  -- Needed to get information such as `unix_socket` location & MySQL version
+2. **python-pymysql** which can be easily installed using the pkg manager e.g: apt, yum
    * The only caveat is that this package name may differ between distributions e.g: `python3-pymysql` or `python36-pymysql` (Trying to cover all the possible differences in the example provided)
 
 
