@@ -19,13 +19,14 @@ This module has been refactored to get rid of the dependencies issue across dist
        * If not able to login with socket, login with user/password
 - [x] Add an option to disable unix_socket
 - [x] make the output more understandable
+- [x] run different commands based on different MySQL versions (Due to changes in newer MySQL versions)
 
 
 ### To do,
 
 - [ ] Update the module doc
 - [ ] Test with more distributions
-
+- [ ] Thinking to test with the desired password first 🤔 ( `Changing password` will be updated if the script used `unix_socket` to login)
 
 
 ---
@@ -48,6 +49,14 @@ An **Idempotent** Ansible Module that provides the functions of `mysql_secure_in
 
 ---
 
+
+## Dependencies
+
+This is NOT something to worry about, It is something to make sure it's meet if you faced an error
+
+1. `mysqladmin` command (already installed with MySQL/Mariadb)  -- Needed to get information such as `unix_socket` location & MySQL version
+2. `python-pymysql` which can be easily installed using the pkg manager e.g: apt, yum
+   * The only caveat is that this package name may differ between distributions e.g: `python3-pymysql` or `python36-pymysql` (Trying to cover all the possible differences in the example provided)
 
 
 ## Usage
@@ -122,16 +131,16 @@ cp mysql_secure_installation.py library/
 
 ## Test
 
-After refactoring, It's needed to re-test with all the common distributions
+After refactoring, It's needed to re-test with all the common distributions, Some distros are not tested yet, but they'll be soon.
 
-Some distros are not tested yet, but they'll be soon.
+💎 I'll be more than happen when you let me know if you faced an error ! 
 
-| :Distribution                         | :Test result                 |
+| :Distribution                         | :Test result          |
 | ------------------------------ | --------------------------   |
 | Centos 6                       |            ⏱️                |
 | Centos 7                       |            🆗                |
 | Centos 8                       |            🆗                |
-| fedora-34                      |            NOT yet                |
+| fedora-34                      |            🆗                |
 | Debian 10 (buster)             |            🆗                |
 | Ubuntu 16.04                   |            ⏱                |
 | Ubuntu 18.04                   |            🆗                |
