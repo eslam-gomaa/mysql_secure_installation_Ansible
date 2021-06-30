@@ -172,7 +172,6 @@ def runcommand(cmd):
     # strips all kinds of trailing whitespace by default, not just one newline
     return info
 
-
 # Checking mysql version first, as Mariadb 10.4.x requires a different command to update user password.
 mysql_version_above_10_3 = False
 # Get MySQL Version
