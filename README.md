@@ -132,7 +132,7 @@ cp mysql_secure_installation.py library/
 
 Below, is a list of the tested distributions
 
-💎 I'll be more than happen when you let me know if you faced an error ! 
+💎 I'll be more than happy when you let me know if you faced an error ! 
 
 | :Distribution                         | :Test result          |  Comment |
 | ------------------------------ | --------------------------   |----------|
