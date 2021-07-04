@@ -2,7 +2,7 @@
 # Sample Playbook to install MySQL & use "mysql_secure_installation" Ansible Module
 
 - name: Install & Secure MySQL
-  hosts: db-test
+  hosts: localhost
   user: vagrant
   become: true
   vars:
@@ -50,7 +50,7 @@
     - name: use "mysql_secure_installation" for Fresh MySQL Installation
       mysql_secure_installation:
         login_password: ''
-        new_password: password22
+        new_password: 'password23'
         user: root
         login_host: localhost
         hosts: ['localhost', '127.0.0.1', '::1']

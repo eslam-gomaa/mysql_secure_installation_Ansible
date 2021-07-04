@@ -2,7 +2,7 @@
 # Sample Playbook to install MySQL & use "mysql_secure_installation" Ansible Module
 
 # If python2 does NOT exist, Ansible will use python3
-- name: Install python2
+- name: Remove python2
   package:
     name: python2
     state: absent
@@ -37,7 +37,7 @@
   package:
     name:
       - python3-PyMySQL
-      - python2-PyMySQL
+#      - python2-PyMySQL
   when: (ansible_os_family == 'RedHat' and ansible_distribution_major_version | int == 8)
 
 - name: Install python-pymysql on Fedora34
