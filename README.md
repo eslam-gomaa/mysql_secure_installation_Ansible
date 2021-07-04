@@ -14,9 +14,6 @@ This module has been refactored to get rid of the dependencies issue across dist
 
 - [x] use `pymysql` lib instead of `MySQLdb 👎`
 - [x] Enable authentication with unix_socket
-  * Logic:
-    * If socket is found, try to login with socket
-       * If not able to login with socket, login with user/password
 - [x] Add an option to disable unix_socket
 - [x] make the output more understandable
 - [x] run different commands based on different MySQL versions (Due to changes in newer MySQL versions)
@@ -26,7 +23,6 @@ This module has been refactored to get rid of the dependencies issue across dist
 
 - [ ] Update the module doc
 - [ ] Test with more distributions
-- [ ] Thinking to test with the desired password first 🤔 ( `Changing password` will be updated if the script used `unix_socket` to login)
 - [ ] Validate that `disable_unix_socket` works well in MySQl version >= 1.4
 
 ---
