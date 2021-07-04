@@ -176,8 +176,11 @@ mysql_version_above_10_3 = False
 # Get socket path
 socket_path = runcommand('mysqladmin variables | grep -w "sock" |  xargs | cut -d " " -f 4')
 connected_with_socket = False
+connected_with_password = False
+connected_with_new_password = False
 pasword_incorrect_warn = False
 mysql_version = None
+
 
 def check_mysql_connection(host, user, password='', unix_socket=True):
     """
@@ -188,23 +191,28 @@ def check_mysql_connection(host, user, password='', unix_socket=True):
     :return: True||False
     """
 
-    if unix_socket:
-        if socket_path['stdout']:
-            if os.path.exists(socket_path['stdout']):
-                try:
-                    mysql.connect(host=host, user=user, passwd=password, unix_socket=socket_path['stdout'])
-                    global connected_with_socket
-                    connected_with_socket = True
-                    return True
-                # except mysql.err.InternalError:
-                except:
-                    pass
-    try:
-        mysql.connect(host=host, user=user, passwd=password)
-        return True
-    except:
-        return False
+    def connect_socket(host=host, user=user, socket_path=socket_path['stdout']):
+        if unix_socket:
+            if socket_path:
+                if os.path.exists(socket_path):
+                    try:
+                        mysql.connect(host=host, user=user, passwd=password, unix_socket=socket_path)
+                        global connected_with_socket
+                        connected_with_socket = True
+                        return True
+                    # except mysql.err.InternalError:
+                    except:
+                        return False
 
+    def connect_password(host=host, user=user, password=password):
+        try:
+            mysql.connect(host=host, user=user, passwd=password)
+            return True
+        except:
+            return False
+
+    if connect_password() or connect_socket():
+        return True
 
 def mysql_secure_installation(login_password, new_password, user='root', login_host='localhost', hosts=['hostname'],
                               change_root_password=True, remove_anonymous_user=True, disallow_root_login_remotely=False,
@@ -280,6 +288,9 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
             else:
                 info['disallow_root_remotely'] = "False -- meets the desired state"
 
+    if check_mysql_connection(host=login_host, user=user, password=new_password, unix_socket=False):
+        global connected_with_new_password
+        connected_with_new_password = True
 
     if check_mysql_connection(host=login_host, user=user, password=login_password, unix_socket=True):
         try:
@@ -288,11 +299,20 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
                                            unix_socket=socket_path['stdout'])
                 mysql_version = runcommand('sudo mysqladmin version | grep -wi server | xargs | cut -d " " -f 3')
             else:
+                # print("socket? " + str(globals()['connected_with_socket']))
                 connection = mysql.connect(host=login_host, user=user, passwd=login_password, db='mysql')
-                mysql_version = runcommand(
-                    "sudo mysqladmin version -u {} -h {} -p{}| grep -wi server | xargs | cut -d ' ' -f 3".format(user,
-                                                                                                                 login_host,
-                                                                                                                 login_password))
+                if not login_password:
+                    mysql_version = runcommand(
+                        "sudo mysqladmin version -u {} -h {} | grep -wi server | xargs | cut -d ' ' -f 3".format(
+                            user,
+                            login_host))
+                else:
+                    mysql_version = runcommand(
+                        "sudo mysqladmin version -u {} -h {} -p{}| grep -wi server | xargs | cut -d ' ' -f 3".format(
+                            user,
+                            login_host,
+                            login_password))
+
             cursor = connection.cursor()
 
             # Get MySQL Version
@@ -311,58 +331,66 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
             remove_anon_user(cursor)
             remove_testdb(cursor)
             disallow_root_remotely(cursor)
-            if change_root_password:
-                pwd = {}
-                for host in hosts:
-                    cursor.execute('use mysql;')
-                    # Need to use SET PASSWORD starting from Mariadb 10.4
-                    # https://mariadb.com/kb/en/set-password/
-                    if globals()['mysql_version_above_10_3']:
-                        # Will return an error if the host does NOT exist, so checking first.
-                        cursor.execute('select user, host, password from mysql.user where user="{}" and host="{}";'.format(user, host))
+
+            if not globals()['connected_with_new_password']:
+                if change_root_password:
+                    pwd = {}
+                    for host in hosts:
+                        cursor.execute('use mysql;')
+                        # Need to use SET PASSWORD starting from Mariadb 10.4
+                        # https://mariadb.com/kb/en/set-password/
+                        if globals()['mysql_version_above_10_3']:
+                            # Will return an error if the host does NOT exist, so checking first.
+                            cursor.execute(
+                                'select user, host, password from mysql.user where user="{}" and host="{}";'.format(
+                                    user, host))
+                            data = cursor.fetchall()
+                            for d in data:
+                                if d[1] == host:
+                                    cursor.execute(
+                                        "SET PASSWORD FOR '{}'@'{}' = PASSWORD('{}');".format(user, host, new_password))
+                        else:
+                            cursor.execute(
+                                "update user set password=PASSWORD('{}') where User='{}' AND Host='{}';".format(
+                                    new_password,
+                                    user, host))
+                        cursor.execute('flush privileges;')
+                        cursor.execute('select user, host, password from mysql.user where user="{}";'.format(user))
                         data = cursor.fetchall()
                         for d in data:
                             if d[1] == host:
-                                cursor.execute(
-                                    "SET PASSWORD FOR '{}'@'{}' = PASSWORD('{}');".format(user, host, new_password))
-                    else:
-                        cursor.execute(
-                            "update user set password=PASSWORD('{}') where User='{}' AND Host='{}';".format(
-                                new_password,
-                                user, host))
-                    cursor.execute('flush privileges;')
-                    cursor.execute('select user, host, password from mysql.user where user="{}";'.format(user))
-                    data = cursor.fetchall()
-                    for d in data:
-                        if d[1] == host:
-                            pwd['{}'.format(d[1])] = d[2]
+                                pwd['{}'.format(d[1])] = d[2]
 
-                out = set(hosts).symmetric_difference(set(pwd.keys()))
+                    out = set(hosts).symmetric_difference(set(pwd.keys()))
 
-                info['hosts_failed'] = list(out)
-                hosts_ = list(set(hosts) - set(list(out)))
+                    info['hosts_failed'] = list(out)
+                    hosts_ = list(set(hosts) - set(list(out)))
 
-                for host in hosts_:
-                    if pwd[host] == pwd[login_host]:
-                        info['hosts_success'].append(host)
-                    else:
-                        info['hosts_failed'].append(login_host)
+                    for host in hosts_:
+                        if pwd[host] == pwd[login_host]:
+                            info['hosts_success'].append(host)
+                        else:
+                            info['hosts_failed'].append(login_host)
 
-                if len(info['hosts_success']) >= 1:
-                    info['stdout'] = 'Password for user: {} @ Hosts: {} changed to the desired state'.format(user, info[
-                        'hosts_success'])
-                # if len(info['hosts_failed']) >= 1:
-                #     info['change_root_pwd'] = 1
-                #    info['stderr'] = 'Could NOT change password for User: {} @ Hosts: {}'.format(user,info['hosts_failed'])
-                # else:
-                #     info['change_root_pwd'] = 0
+                    if len(info['hosts_success']) >= 1:
+                        info['stdout'] = 'Password for user: {} @ Hosts: {} changed to the desired state'.format(user,
+                                                                                                                 info[
+                                                                                                                     'hosts_success'])
+                    # if len(info['hosts_failed']) >= 1:
+                    #     info['change_root_pwd'] = 1
+                    #    info['stderr'] = 'Could NOT change password for User: {} @ Hosts: {}'.format(user,info['hosts_failed'])
+                    # else:
+                    #     info['change_root_pwd'] = 0
 
-                if len(info['hosts_failed']) >= 1 and len(info['hosts_success']) >= 1:
-                    info['change_root_pwd'] = "True  -- But not for all of the hosts"
-                elif len(info['hosts_failed']) == 0 and len(info['hosts_success']) >= 1:
-                    info['change_root_pwd'] = True
-                elif len(info['hosts_failed']) == 1 and len(info['hosts_success']) == 0:
-                    info['change_root_pwd'] = False
+                    if len(info['hosts_failed']) >= 1 and len(info['hosts_success']) >= 1:
+                        info['change_root_pwd'] = "True  -- But not for all of the hosts"
+                    elif len(info['hosts_failed']) == 0 and len(info['hosts_success']) >= 1:
+                        info['change_root_pwd'] = True
+                    elif len(info['hosts_failed']) == 1 and len(info['hosts_success']) == 0:
+                        info['change_root_pwd'] = False
+            else:
+                info['change_root_pwd'] = False
+
 
             connection.close()
         except mysql.Error as e:
@@ -370,32 +398,40 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
             info['stderr'] = e
 
     elif check_mysql_connection(host=login_host, user=user, password=new_password, unix_socket=True):
+
+
         if globals()['connected_with_socket']:
             connection = mysql.connect(host=login_host, user=user, passwd=new_password, db='mysql',
                                        unix_socket=socket_path['stdout'])
         else:
-            connection = mysql.connect(host=login_host, user=user, passwd=new_password, db='mysql')
+            if not new_password:
+                connection = mysql.connect(host=login_host, user=user, db='mysql')
+            else:
+                connection = mysql.connect(host=login_host, user=user, passwd=new_password, db='mysql')
 
         cursor_ = connection.cursor()
         remove_anon_user(cursor_)
         remove_testdb(cursor_)
         disallow_root_remotely(cursor_)
         info['change_root_pwd'] = False
-        info['stdout'] = 'Password of {}@{} Already meets the desired state'.format(user, login_host)
 
     else:
         info['change_root_pwd'] = False
         info['stdout'] = 'Neither the provided old passwd nor the new passwd are correct'
         pasword_incorrect_warn = True
+    if globals()['connected_with_new_password']:
+        info['stdout'] = 'Password of {}@{} Already meets the desired state'.format(user, login_host)
+    info['connected_with_socket?'] = globals()['connected_with_socket']
+    info['new_password_correct?'] = globals()['connected_with_new_password']
+    info['mysql_version_above_10_3?'] = globals()['mysql_version_above_10_3']
     return info
 
 ### Testing ###
 # check = check_mysql_connection('localhost', 'root', '', unix_socket=True)
 # print(check)
-#
 # print("")
 #
-# secure = mysql_secure_installation(login_password="password22", new_password='', hosts=['localhost', '127.0.0.1'], login_host='localhost', remove_test_db=True, disallow_root_login_remotely=True)
+# secure = mysql_secure_installation(login_password="", new_password='password22', hosts=['localhost', '127.0.0.1'], login_host='localhost', remove_test_db=True, disallow_root_login_remotely=True)
 # print(secure)
 ############
 #######################
