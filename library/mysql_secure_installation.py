@@ -213,6 +213,7 @@ def check_mysql_connection(host, user, password='', unix_socket=True):
 
     if connect_password() or connect_socket():
         return True
+    return False
 
 def mysql_secure_installation(login_password, new_password, user='root', login_host='localhost', hosts=['hostname'],
                               change_root_password=True, remove_anonymous_user=True, disallow_root_login_remotely=False,
@@ -376,11 +377,6 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
                         info['stdout'] = 'Password for user: {} @ Hosts: {} changed to the desired state'.format(user,
                                                                                                                  info[
                                                                                                                      'hosts_success'])
-                    # if len(info['hosts_failed']) >= 1:
-                    #     info['change_root_pwd'] = 1
-                    #    info['stderr'] = 'Could NOT change password for User: {} @ Hosts: {}'.format(user,info['hosts_failed'])
-                    # else:
-                    #     info['change_root_pwd'] = 0
 
                     if len(info['hosts_failed']) >= 1 and len(info['hosts_success']) >= 1:
                         info['change_root_pwd'] = "True  -- But not for all of the hosts"
@@ -389,7 +385,7 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
                     elif len(info['hosts_failed']) == 1 and len(info['hosts_success']) == 0:
                         info['change_root_pwd'] = False
             else:
-                info['change_root_pwd'] = False
+                info['change_root_pwd'] = "False -- meets the desired state"
 
 
             connection.close()
