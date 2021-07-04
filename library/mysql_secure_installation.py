@@ -409,7 +409,7 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
         remove_anon_user(cursor_)
         remove_testdb(cursor_)
         disallow_root_remotely(cursor_)
-        info['change_root_pwd'] = False
+        info['change_root_pwd'] = "False -- meets the desired state"
 
     else:
         info['change_root_pwd'] = False
