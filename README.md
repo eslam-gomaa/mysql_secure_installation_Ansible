@@ -182,14 +182,14 @@ Below, is a list of the tested distributions
 
 ## Known issues
 
+```bash
+No package matching 'python*-pymysql' is available
+```
 
 If you face this, don't worry it's **NOT an issue**, the problem is that `python-pymysql` might has a different name on the distro you're using
 
 You'll probably face this if you are using a non [tested](https://github.com/eslam-gomaa/mysql_secure_installation_Ansible#test) distribution
 
-```bash
-No package matching 'python*-pymysql' is available
-```
 
 ![image](https://user-images.githubusercontent.com/33789516/123947208-6bb5bf80-d9a0-11eb-98b1-9e7b89afe2de.png)
 
