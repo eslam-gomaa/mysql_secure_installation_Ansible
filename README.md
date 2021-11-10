@@ -3,7 +3,9 @@
 # mysql_secure_installation_Ansible
 
 
-.
+<br>
+
+<br>
 
 # ✋ Wait a second !
 
@@ -141,6 +143,22 @@ Below, is a list of the tested distributions
 | Ubuntu 18.04                   |            🆗                |          |
 | Ubuntu 20.04                   |            🆗                |          |
 
+---
+
+<br>
+
+## Updates / News
+
+as of Mariadb v10.4+ we can not use `update mysql.user` > Currently that affects `disable_unix_socket` option for Mariadb versions above 10.4 (need some investigation & will update the module)
+
+**Error produced**
+> ERROR 1356 (HY000): View 'mysql.user' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them
+
+* https://stackoverflow.com/a/64841540
+
+---
+
+<br>
 
 ## Input
 
