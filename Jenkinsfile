@@ -1,5 +1,5 @@
 pipeline {
-  agent agent { label 'kvm_lab' }
+  agent { label 'kvm_lab' }
   stages {
     stage('Clone') {
       steps {
