@@ -13,4 +13,4 @@ cat output.txt | grep 'Password for user' | grep  'changed to the desired state'
 
 echo "Check that the user password will NOT change the next time"
 ansible-playbook sample-playbook.yml
-cat output.txt | grep 'Password for user' | grep  'Already meets the desired state'
+cat output.txt | grep 'Password of' | grep  'Already meets the desired state'
