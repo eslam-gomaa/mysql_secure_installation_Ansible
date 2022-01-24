@@ -10,17 +10,22 @@ pipeline {
       steps {
         echo 'Begin Testing'
         sh 'vagrant up ubuntu_18_04'
-
-        script {
-          try {
-            echo 'Removing the testing vm'
-            sh 'vagrant destroy -f ubuntu_18_04'
-          } catch (err) {
-            echo err.getMessage()
-          }
-        }
-        sh 'exit 0'
+      }
+    }
+    stage('Destroy Ubuntu 18.04 VM') {
+      steps {
+        sh 'vagrant destroy -f ubuntu_18_04'
       }
     }
   }
 }
+
+        // script {
+        //   try {
+        //     echo 'Removing the testing vm'
+        //     sh 'vagrant destroy -f ubuntu_18_04'
+        //   } catch (err) {
+        //     echo err.getMessage()
+        //   }
+        // }
+        // sh 'exit 0'
