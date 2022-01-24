@@ -12,7 +12,9 @@ pipeline {
         sh 'vagrant up ubuntu_18_04'
         
         echo 'Removing the testing vm'
-        sh 'vagrant destroy -f ubuntu_18_04'
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') { // Ignore the error returned by destroying th VM.
+          sh 'vagrant destroy -f ubuntu_18_04'
+        }
       }
     }
   }
