@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent kvm_lab
   stages {
     stage('Clone') {
       steps {
