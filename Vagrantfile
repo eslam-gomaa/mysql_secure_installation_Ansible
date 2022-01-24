@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
       end
       ubuntu_18_04.vm.hostname = "ubuntu-18-04"
       ubuntu_18_04.vm.box = "generic/ubuntu1804"
-      ubuntu_18_04.vm.provision "Test mysql_secure_installation ansible module", type: "shell", path: "test-scripts/ubuntu_18_04.sh", privileged: true
+      ubuntu_18_04.vm.provision "Test mysql_secure_installation ansible module", type: "shell", path: "test_scripts/ubuntu_18_04.sh", privileged: true
       # ubuntu_18_04.vm.network :public_network, :dev => "virbr0", :mode => "bridge", :type => "bridge", :ip => "192.168.122.40"
     end
 
