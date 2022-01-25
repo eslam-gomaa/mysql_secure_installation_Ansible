@@ -5,7 +5,25 @@ pipeline {
       steps {
         git(url: 'https://github.com/eslam-gomaa/mysql_secure_installation_Ansible.git', branch: 'master', credentialsId: 'github_id')
       }
-    }  
+    }
+    stage('Post clone step') {
+      steps {
+        script {
+          echo "Changing the owner & permissions of .vagrant directory"
+          // Avoid Permission denied when executing 'git clean -fdx' (Removes .vagrant directory)
+          sh '''
+            if [ ! -d .vagrant ]
+            then
+                mkdir -p .vagrant
+                chown $(whoami):$(whoami) .vagrant -R
+                chmod +s .vagrant -R
+                setfacl -m d:u:$(whoami):rwx .vagrant/
+                setfacl -m u:$(whoami):rwx .vagrant/
+            fi     
+          '''
+        }
+      }
+    }
     stage('Destroy old test VMs') {
       steps {
         script {
