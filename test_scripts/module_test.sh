@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 git clone https://github.com/eslam-gomaa/mysql_secure_installation_Ansible.git
 cd mysql_secure_installation_Ansible
 
