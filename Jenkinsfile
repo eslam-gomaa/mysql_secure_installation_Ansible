@@ -9,6 +9,7 @@ pipeline {
     stage('Test Ubuntu 18.04') {
       steps {
         echo 'Begin Testing'
+        sh 'vagrant destroy -f'
         sh 'vagrant up ubuntu_18_04'
 
         echo 'Removing the testing vm'
