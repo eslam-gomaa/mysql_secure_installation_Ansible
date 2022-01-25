@@ -23,7 +23,7 @@ pipeline {
     stage('Test Ubuntu 18.04') {
       steps {
         echo 'Begin Testing'
-        timeout(time: 30, unit: 'MINUTES') {
+        timeout(time: 60, unit: 'MINUTES') {
           sh 'vagrant up ubuntu_18_04'
           }
 
