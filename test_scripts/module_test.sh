@@ -2,7 +2,14 @@
 git clone https://github.com/eslam-gomaa/mysql_secure_installation_Ansible.git
 cd mysql_secure_installation_Ansible
 
-echo "This will Install & Secure MySQL"
+echo """
+**************************************
+      Running a Sample Playbook
+      This Will:
+        1. Install MySQL
+        2. Secure it with 'mysql_secure_installation' module  
+**************************************
+"""
 ansible-playbook sample-playbook.yml
 
 
