@@ -9,7 +9,15 @@ pipeline {
     stage('Destroy old test VMs') {
       steps {
         echo 'Double check that old test vm\'s are cleared'
-        sh 'vagrant destroy -f'
+        sh '''
+            for i in $(virsh list --all --name)
+            do
+              virsh destroy "$i"
+              virsh undefine "$i"
+              virsh vol-delete --pool default "$i".img 
+              vagrant destroy -f
+            done        
+        '''
       }
     }
     stage('Test Ubuntu 18.04') {
