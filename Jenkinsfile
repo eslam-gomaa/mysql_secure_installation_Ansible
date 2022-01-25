@@ -31,7 +31,17 @@ pipeline {
     }
     stage('Test Ubuntu 16.04') {
       steps {
-        
+        script {
+          echo 'Download the box if needed (Avoiding a bug)'
+          sh '''
+            image_name="generic/ubuntu1604"
+            if ! vagrant box list | grep $image_name >/dev/null
+            then
+              echo "Downloading $image_name"
+              vagrant box add $image_name --provider libvirt  --no-tty
+            fi
+          '''
+        }
         echo 'Begin Testing'
         sh 'vagrant up ubuntu_16_04'
 
