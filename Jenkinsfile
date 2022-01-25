@@ -20,11 +20,12 @@ pipeline {
         '''
       }
     }
-    timeout(time: 30, unit: 'MINUTES') {
-      stage('Test Ubuntu 18.04') {
+    stage('Test Ubuntu 18.04') {
       steps {
         echo 'Begin Testing'
-        sh 'vagrant up ubuntu_18_04'
+        timeout(time: 30, unit: 'MINUTES') {
+          sh 'vagrant up ubuntu_18_04'
+          }
 
         echo 'Removing the test vm'
         sh 'vagrant destroy -f ubuntu_18_04'
@@ -33,12 +34,13 @@ pipeline {
     stage('Test Ubuntu 16.04') {
       steps {
         echo 'Begin Testing'
-        sh 'vagrant up ubuntu_16_04'
+        timeout(time: 30, unit: 'MINUTES') {
+          sh 'vagrant up ubuntu_16_04'
+          }
 
         echo 'Removing the test vm'
         sh 'vagrant destroy -f ubuntu_16_04'
       }
-     }
     }
   }
 }
