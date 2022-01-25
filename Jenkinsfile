@@ -28,7 +28,7 @@ pipeline {
         // to prevent a BUG that may prevent downloading the box from within the pipeline.
         script {
           sh '''
-          for image_name in "generic/ubuntu1804" "generic/ubuntu1604" "generic/ubuntu2004"
+          for image_name in "generic/ubuntu1804" "generic/ubuntu1604" "generic/ubuntu2004" "generic/centos8" "generic/centos7"
           do
               if ! vagrant box list | grep $image_name >/dev/null
               then
@@ -52,17 +52,6 @@ pipeline {
     }
     stage('Test Ubuntu 16.04') {
       steps {
-        // script {
-        //   echo 'Download the box if needed (Avoiding a bug)'
-        //   sh '''
-        //     image_name="generic/ubuntu1604"
-        //     if ! vagrant box list | grep $image_name >/dev/null
-        //     then
-        //       echo "Downloading $image_name"
-        //       vagrant box add $image_name --provider libvirt  --no-tty
-        //     fi
-        //   '''
-        // }
         echo 'Begin Testing'
         sh 'vagrant up ubuntu_16_04'
 
@@ -77,6 +66,24 @@ pipeline {
 
         echo 'Removing the test vm'
         sh 'vagrant destroy -f ubuntu_20_04'
+      }
+    }
+    stage('Test CentOS 7') {
+      steps {
+        echo 'Begin Testing'
+        sh 'vagrant up centos_7'
+
+        echo 'Removing the test vm'
+        sh 'vagrant destroy -f centos_7'
+      }
+    }
+    stage('Test CentOS 8') {
+      steps {
+        echo 'Begin Testing'
+        sh 'vagrant up centos_8'
+
+        echo 'Removing the test vm'
+        sh 'vagrant destroy -f centos_8'
       }
     }
   }
