@@ -62,5 +62,6 @@
 
     - debug:
         var: secure
-
-    - local_action: copy content= dest=output.txt
+    
+    # Used for testing.
+    - local_action: copy content={{secure}} dest=output.txt
