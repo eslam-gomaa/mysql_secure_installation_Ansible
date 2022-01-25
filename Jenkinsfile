@@ -6,6 +6,12 @@ pipeline {
         git(url: 'https://github.com/eslam-gomaa/mysql_secure_installation_Ansible.git', branch: 'master', credentialsId: 'github_id')
       }
     }
+    stage('Destroy old test VMs') {
+      steps {
+        echo 'Double check that old test vm\'s are cleared'
+        sh 'vagrant destroy -f'
+      }
+    }
     stage('Test Ubuntu 18.04') {
       steps {
         echo 'Begin Testing'
