@@ -9,11 +9,19 @@ pipeline {
     stage('Test Ubuntu 18.04') {
       steps {
         echo 'Begin Testing'
-        sh 'vagrant destroy -f'
         sh 'vagrant up ubuntu_18_04'
 
-        echo 'Removing the testing vm'
-        // sh 'vagrant destroy -f ubuntu_18_04'
+        echo 'Removing the test vm'
+        sh 'vagrant destroy -f ubuntu_18_04'
+      }
+    }
+    stage('Test Ubuntu 16.04') {
+      steps {
+        echo 'Begin Testing'
+        sh 'vagrant up ubuntu_16_04'
+
+        echo 'Removing the test vm'
+        sh 'vagrant destroy -f ubuntu_16_04'
       }
     }
   }
