@@ -71,6 +71,30 @@ Vagrant.configure("2") do |config|
         centos_7.vm.provision "Install ansible", type: "shell", path: "test_scripts/install_ansible_centos_7.sh", privileged: true
         centos_7.vm.provision "Test mysql_secure_installation ansible module", type: "shell", path: "test_scripts/module_test.sh", privileged: true
       end
+
+    config.vm.define "fedora34" do |fedora34|
+      fedora34.vm.provider :libvirt do |libvirt|
+      libvirt.cpus = 2
+      libvirt.memory = "#{memory}"
+      libvirt.title  = "fedora34"
+        end
+        fedora34.vm.hostname = "fedora34"
+        fedora34.vm.box = "generic/fedora34"
+        fedora34.vm.provision "Test mysql_secure_installation ansible module", type: "shell", path: "test_scripts/Install_ansible_fedora34.sh", privileged: true
+        fedora34.vm.provision "Test mysql_secure_installation ansible module", type: "shell", path: "test_scripts/module_test.sh", privileged: true
+      end
+
+    config.vm.define "debian10" do |debian10|
+      debian10.vm.provider :libvirt do |libvirt|
+      libvirt.cpus = 2
+      libvirt.memory = "#{memory}"
+      libvirt.title  = "debian10"
+        end
+        debian10.vm.hostname = "debian10"
+        debian10.vm.box = "generic/debian10"
+        debian10.vm.provision "Test mysql_secure_installation ansible module", type: "shell", path: "test_scripts/Install_ansible_debian10.sh", privileged: true
+        debian10.vm.provision "Test mysql_secure_installation ansible module", type: "shell", path: "test_scripts/module_test.sh", privileged: true
+      end
   
 
     

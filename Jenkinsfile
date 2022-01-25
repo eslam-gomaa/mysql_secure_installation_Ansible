@@ -46,7 +46,7 @@ pipeline {
         // to prevent a BUG that may prevent downloading the box from within the pipeline.
         script {
           sh '''
-          for image_name in "generic/ubuntu1804" "generic/ubuntu1604" "generic/ubuntu2004" "generic/centos8" "generic/centos7"
+          for image_name in "generic/ubuntu1804" "generic/ubuntu1604" "generic/ubuntu2004" "generic/centos8" "generic/centos7" "generic/fedora34"  "generic/debian10"
           do
               if ! vagrant box list | grep $image_name >/dev/null
               then
@@ -102,6 +102,24 @@ pipeline {
 
         echo 'Removing the test vm'
         sh 'vagrant destroy -f centos_8'
+      }
+    }
+    stage('Test fedora 34') {
+      steps {
+        echo 'Begin Testing'
+        sh 'vagrant up fedora34'
+
+        echo 'Removing the test vm'
+        sh 'vagrant destroy -f fedora34'
+      }
+    }
+    stage('Test debian 10') {
+      steps {
+        echo 'Begin Testing'
+        sh 'vagrant up debian10'
+
+        echo 'Removing the test vm'
+        sh 'vagrant destroy -f debian10'
       }
     }
   }
