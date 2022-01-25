@@ -7,9 +7,9 @@ memory        = 1024
 ##################  ##################  ##################
 
 Vagrant.configure("2") do |config|
-  # config.ssh.insert_key = false
-    config.ssh.username = "vagrant"
-    config.ssh.password = "vagrant"
+    config.ssh.insert_key = false
+    # config.ssh.username = "vagrant"
+    # config.ssh.password = "vagrant"
 
     config.vm.define "ubuntu_16_04" do |ubuntu_16_04|
       ubuntu_16_04.vm.provider :libvirt do |libvirt|
