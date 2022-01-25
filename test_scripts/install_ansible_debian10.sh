@@ -1,2 +1,2 @@
 #!/bin/bash -e
-apt install ansible -y
+apt install git ansible -y
