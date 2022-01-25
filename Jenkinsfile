@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Destroy old test VMs') {
       steps {
-        echo 'Double check that old test vm\'s are cleared'
+        echo "Double check that old test vm's are cleared"
         sh '''
             for i in $(virsh list --all --name)
             do
