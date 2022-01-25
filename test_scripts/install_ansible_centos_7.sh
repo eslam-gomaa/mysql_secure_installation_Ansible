@@ -1,2 +1,2 @@
-#!/bin/bash
-yum -y install ansible
+#!/bin/bash -e
+yum -y install ansible git
