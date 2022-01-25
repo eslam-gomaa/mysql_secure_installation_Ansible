@@ -33,10 +33,10 @@ pipeline {
               do
                 virsh destroy "$i"
                 virsh undefine "$i"
-                virsh vol-delete --pool default "$i".img 
-                vagrant destroy -f
-              done        
+                virsh vol-delete --pool default "$i".img
+              done
           '''
+          sh 'vagrant destroy -f'
         }
       }
     }
