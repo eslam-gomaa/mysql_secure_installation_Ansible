@@ -64,8 +64,8 @@ pipeline {
     
     stage('Test Ubuntu 18.04') {
       steps {
-        ubuntu_18_04.setStatus('running')
         script {
+          ubuntu_18_04.setStatus('running')
           try {
             echo 'Begin Testing'
             sh 'vagrant up ubuntu_18_04'
