@@ -132,16 +132,16 @@ Below, is a list of the tested distributions
 
 💎 I'll be more than happy when you let me know if you faced an error ! 
 
-| :Distribution                         | :Test result          |  Comment |
+| Distribution                         | Test result          |  Comment |
 | ------------------------------ | --------------------------   |----------|
 | Centos 6                       |            ⏱️                |          |
-| Centos 7                       |            🆗                |          |
-| Centos 8                       |            🆗                |          |
-| fedora-34                      |            🆗                |          |
-| Debian 10 (buster)             |            🆗                |          |
-| Ubuntu 16.04                   |            🆗                | had to upgrade Ansible to a newer version (Related to example syntax NOT the module)|
-| Ubuntu 18.04                   |            ![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=ubuntu_18_04)                |          |
-| Ubuntu 20.04                   |            🆗                |          |
+| Centos 7                       |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=centos_7)|          |
+| Centos 8                       |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=centos_8)|          |
+| fedora-34                      |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=fedora34)|          |
+| Debian 10 (buster)             |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=debian10)|          |
+| Ubuntu 16.04                   |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=ubuntu_16_04)| had to upgrade Ansible to a newer version (Related to example syntax NOT the module)|
+| Ubuntu 18.04                   |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=ubuntu_18_04)|          |
+| Ubuntu 20.04                   |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=ubuntu_18_04)|          |
 
 ---
 
