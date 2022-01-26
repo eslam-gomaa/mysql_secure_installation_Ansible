@@ -78,8 +78,8 @@ pipeline {
           echo 'Removing the test vm'
           sh 'vagrant destroy -f ubuntu_18_04'
         }
+        error "Build failed"
       }
-      error "Build failed"
     }
     stage('Test Ubuntu 16.04') {
       steps {
