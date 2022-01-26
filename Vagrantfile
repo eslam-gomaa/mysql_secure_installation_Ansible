@@ -96,5 +96,17 @@ Vagrant.configure("2") do |config|
         debian10.vm.provision "Test mysql_secure_installation ansible module", type: "shell", path: "test_scripts/module_test.sh", privileged: true
       end
 
+    config.vm.define "debian11" do |debian11|
+      debian11.vm.provider :libvirt do |libvirt|
+      libvirt.cpus = 2
+      libvirt.memory = "#{memory}"
+      libvirt.title  = "debian11"
+        end
+        debian11.vm.hostname = "debian11"
+        debian11.vm.box = "generic/debian11"
+        debian11.vm.provision "Install ansible", type: "shell", path: "test_scripts/install_ansible_debian11.sh", privileged: true
+        debian11.vm.provision "Test mysql_secure_installation ansible module", type: "shell", path: "test_scripts/module_test.sh", privileged: true
+      end
+
     
 end
