@@ -1,2 +1,2 @@
 #!/bin/bash -e
-apt install git ansibleTYPO -y
+apt install git ansible -y
