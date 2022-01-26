@@ -79,7 +79,7 @@ pipeline {
             ubuntu_18_04.setColor('brightgreen')
           } catch (Exception err) {
             ubuntu_18_04.setStatus('failed')
-            ubuntu_18_04.setColor('pink')
+            ubuntu_18_04.setColor('red')
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -98,7 +98,7 @@ pipeline {
             ubuntu_16_04.setColor('brightgreen')
           } catch (Exception err) {
             ubuntu_16_04.setStatus('failed')
-            ubuntu_16_04.setColor('pink')
+            ubuntu_16_04.setColor('red')
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -117,7 +117,7 @@ pipeline {
             ubuntu_20_04.setColor('brightgreen')
           } catch (Exception err) {
             ubuntu_20_04.setStatus('failed')
-            ubuntu_20_04.setColor('pink')
+            ubuntu_20_04.setColor('red')
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -127,38 +127,78 @@ pipeline {
     }
     stage('Test CentOS 7') {
       steps {
-        echo 'Begin Testing'
-        sh 'vagrant up centos_7'
-
-        echo 'Removing the test vm'
-        sh 'vagrant destroy -f centos_7'
+        script {
+          centos_7.setStatus('running')
+          try {
+            echo 'Begin Testing'
+            sh 'vagrant up centos_7'
+            centos_7.setStatus('passed')
+            centos_7.setColor('brightgreen')
+          } catch (Exception err) {
+            centos_7.setStatus('failed')
+            centos_7.setColor('pink')
+            // error "Build failed"
+            }
+          echo 'Removing the test vm'
+          sh 'vagrant destroy -f centos_7'
+        }
       }
     }
     stage('Test CentOS 8') {
       steps {
-        echo 'Begin Testing'
-        sh 'vagrant up centos_8'
-
-        echo 'Removing the test vm'
-        sh 'vagrant destroy -f centos_8'
+        script {
+          centos_8.setStatus('running')
+          try {
+            echo 'Begin Testing'
+            sh 'vagrant up centos_8'
+            centos_8.setStatus('passed')
+            centos_8.setColor('brightgreen')
+          } catch (Exception err) {
+            centos_8.setStatus('failed')
+            centos_8.setColor('pink')
+            // error "Build failed"
+            }
+          echo 'Removing the test vm'
+          sh 'vagrant destroy -f centos_8'
+        }
       }
     }
-    stage('Test fedora 34') {
+    stage('Test Fedora 34') {
       steps {
-        echo 'Begin Testing'
-        sh 'vagrant up fedora34'
-
-        echo 'Removing the test vm'
-        sh 'vagrant destroy -f fedora34'
+        script {
+          fedora34.setStatus('running')
+          try {
+            echo 'Begin Testing'
+            sh 'vagrant up fedora34'
+            fedora34.setStatus('passed')
+            fedora34.setColor('brightgreen')
+          } catch (Exception err) {
+            fedora34.setStatus('failed')
+            fedora34.setColor('pink')
+            // error "Build failed"
+            }
+          echo 'Removing the test vm'
+          sh 'vagrant destroy -f fedora34'
+        }
       }
     }
-    stage('Test debian 10') {
+    stage('Test Debian 10') {
       steps {
-        echo 'Begin Testing'
-        sh 'vagrant up debian10'
-
-        echo 'Removing the test vm'
-        sh 'vagrant destroy -f debian10'
+        script {
+          debian10.setStatus('running')
+          try {
+            echo 'Begin Testing'
+            sh 'vagrant up debian10'
+            debian10.setStatus('passed')
+            debian10.setColor('brightgreen')
+          } catch (Exception err) {
+            debian10.setStatus('failed')
+            debian10.setColor('pink')
+            // error "Build failed"
+            }
+          echo 'Removing the test vm'
+          sh 'vagrant destroy -f debian10'
+        }
       }
     }
   }

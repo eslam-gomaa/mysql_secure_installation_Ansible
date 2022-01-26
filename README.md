@@ -138,7 +138,7 @@ Below, is a list of the tested distributions
 | Centos 8                       |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=centos_8)|          |
 | fedora-34                      |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=fedora34)|          |
 | Debian 10 (buster)             |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=debian10)|          |
-| Ubuntu 16.04                   |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=ubuntu_16_04)| had to upgrade Ansible to a newer version (Related to example syntax NOT the module)|
+| Ubuntu 16.04                   |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=ubuntu_16_04)| ![Make sure you're not using an old version](https://github.com/eslam-gomaa/mysql_secure_installation_Ansible/blob/master/test_scripts/install_ansible_ubuntu_16_04.sh) (Related to example syntax)|
 | Ubuntu 18.04                   |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=ubuntu_18_04)|          |
 | Ubuntu 20.04                   |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=ubuntu_20_04)|          |
 
