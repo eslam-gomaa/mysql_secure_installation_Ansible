@@ -220,5 +220,13 @@ pipeline {
         }
       }
     }
+    stage('Post pipeline: clear cached vagrant boxes') {
+      steps {
+        script {
+          echo "Useful to save disk space"
+          sh 'find home/orange/.vagrant.d/boxes/ -size +600M -exec ls -lh {} \; 2>/dev/null'
+        }
+      }
+    }
   }
 }
