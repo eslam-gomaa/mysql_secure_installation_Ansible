@@ -130,7 +130,7 @@ cp mysql_secure_installation.py library/
 
 Below, is a list of the tested distributions
 
-💎 I'll be more than happy when you let me know if you faced an error ! 
+📌 The tests are done by an automated Jenkins [pipeline](https://github.com/eslam-gomaa/mysql_secure_installation_Ansible/blob/master/Jenkinsfile)
 
 | Distribution                         | Test result          |  Comment |
 | ------------------------------ | --------------------------   |----------|
@@ -142,6 +142,8 @@ Below, is a list of the tested distributions
 | Ubuntu 16.04                   |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=ubuntu_16_04)| [Make sure you're not using an old version](https://github.com/eslam-gomaa/mysql_secure_installation_Ansible/blob/master/test_scripts/install_ansible_ubuntu_16_04.sh) (Related to example syntax)|
 | Ubuntu 18.04                   |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=ubuntu_18_04)|          |
 | Ubuntu 20.04                   |![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=ubuntu_20_04)|          |
+
+💎 I'll be more than happy when you let me know if you faced an error ! 
 
 ---
 
@@ -196,7 +198,7 @@ as of Mariadb v10.4+ we can not use `update mysql.user` > Currently that affects
 
 
 ---
-.
+<br>
 
 ## Known issues
 
@@ -238,11 +240,11 @@ ansible-doc -M library mysql_secure_installation -v
 
 ---
 
-.
+<br>
 
 ### Please leave a ⭐ if you found it useful
 
-.
+<br>
 
 Thank you
 

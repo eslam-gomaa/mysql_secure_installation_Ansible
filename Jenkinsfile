@@ -203,13 +203,3 @@ pipeline {
     }
   }
 }
-
-        // script {
-        //   try {
-        //     echo 'Removing the testing vm'
-        //     sh 'vagrant destroy -f ubuntu_18_04'
-        //   } catch (err) {
-        //     echo err.getMessage()
-        //   }
-        // }
-        // sh 'exit 0'
