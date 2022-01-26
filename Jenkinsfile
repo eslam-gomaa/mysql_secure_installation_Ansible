@@ -1,11 +1,11 @@
-def ubuntu_16_04 = addEmbeddableBadgeConfiguration(id: "ubuntu_16_04", subject: "Test Result")
+def ubuntu_16_04 = addEmbeddableBadgeConfiguration(id: "ubuntu_16_04", style: "flat", subject: "Test Result")
 def ubuntu_18_04 = addEmbeddableBadgeConfiguration(id: "ubuntu_18_04", subject: "Test Result")
 def ubuntu_20_04 = addEmbeddableBadgeConfiguration(id: "ubuntu_20_04", subject: "Test Result")
 def centos_7 = addEmbeddableBadgeConfiguration(id: "centos_7", subject: "Test Result")
 def centos_8 = addEmbeddableBadgeConfiguration(id: "centos_8", subject: "Test Result")
 def fedora34 = addEmbeddableBadgeConfiguration(id: "fedora34", subject: "Test Result")
 def debian10 = addEmbeddableBadgeConfiguration(id: "debian10", subject: "Test Result")
-
+def debian11 = addEmbeddableBadgeConfiguration(id: "debian11", subject: "Test Result")
 
 pipeline {
   agent { label 'kvm_lab' }
