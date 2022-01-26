@@ -1,11 +1,11 @@
 def ubuntu_16_04 = addEmbeddableBadgeConfiguration(id: "ubuntu_16_04", style: "flat", subject: "Test Result")
-def ubuntu_18_04 = addEmbeddableBadgeConfiguration(id: "ubuntu_18_04", subject: "Test Result")
-def ubuntu_20_04 = addEmbeddableBadgeConfiguration(id: "ubuntu_20_04", subject: "Test Result")
-def centos_7 = addEmbeddableBadgeConfiguration(id: "centos_7", subject: "Test Result")
-def centos_8 = addEmbeddableBadgeConfiguration(id: "centos_8", subject: "Test Result")
-def fedora34 = addEmbeddableBadgeConfiguration(id: "fedora34", subject: "Test Result")
-def debian10 = addEmbeddableBadgeConfiguration(id: "debian10", subject: "Test Result")
-def debian11 = addEmbeddableBadgeConfiguration(id: "debian11", subject: "Test Result")
+def ubuntu_18_04 = addEmbeddableBadgeConfiguration(id: "ubuntu_18_04", style: "flat", subject: "Test Result")
+def ubuntu_20_04 = addEmbeddableBadgeConfiguration(id: "ubuntu_20_04", style: "flat", subject: "Test Result")
+def centos_7 = addEmbeddableBadgeConfiguration(id: "centos_7", style: "flat", subject: "Test Result")
+def centos_8 = addEmbeddableBadgeConfiguration(id: "centos_8", style: "flat", subject: "Test Result")
+def fedora34 = addEmbeddableBadgeConfiguration(id: "fedora34", style: "flat", subject: "Test Result")
+def debian10 = addEmbeddableBadgeConfiguration(id: "debian10", style: "flat", subject: "Test Result")
+def debian11 = addEmbeddableBadgeConfiguration(id: "debian11", style: "flat", subject: "Test Result")
 
 pipeline {
   agent { label 'kvm_lab' }
@@ -79,7 +79,7 @@ pipeline {
             ubuntu_18_04.setColor('brightgreen')
           } catch (Exception err) {
             ubuntu_18_04.setStatus('failed')
-            ubuntu_18_04.setColor('red')
+            ubuntu_18_04.setColor('pink')
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -98,7 +98,7 @@ pipeline {
             ubuntu_16_04.setColor('brightgreen')
           } catch (Exception err) {
             ubuntu_16_04.setStatus('failed')
-            ubuntu_16_04.setColor('red')
+            ubuntu_16_04.setColor('pink')
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -117,7 +117,7 @@ pipeline {
             ubuntu_20_04.setColor('brightgreen')
           } catch (Exception err) {
             ubuntu_20_04.setStatus('failed')
-            ubuntu_20_04.setColor('red')
+            ubuntu_20_04.setColor('pink')
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -136,7 +136,7 @@ pipeline {
             centos_7.setColor('brightgreen')
           } catch (Exception err) {
             centos_7.setStatus('failed')
-            centos_7.setColor('red')
+            centos_7.setColor('pink')
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -155,7 +155,7 @@ pipeline {
             centos_8.setColor('brightgreen')
           } catch (Exception err) {
             centos_8.setStatus('failed')
-            centos_8.setColor('red')
+            centos_8.setColor('pink')
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -174,7 +174,7 @@ pipeline {
             fedora34.setColor('brightgreen')
           } catch (Exception err) {
             fedora34.setStatus('failed')
-            fedora34.setColor('red')
+            fedora34.setColor('pink')
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -193,7 +193,7 @@ pipeline {
             debian10.setColor('brightgreen')
           } catch (Exception err) {
             debian10.setStatus('failed')
-            debian10.setColor('red')
+            debian10.setColor('pink')
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -212,7 +212,7 @@ pipeline {
             debian11.setColor('brightgreen')
           } catch (Exception err) {
             debian11.setStatus('failed')
-            debian11.setColor('red')
+            debian11.setColor('pink')
             // error "Build failed"
             }
           echo 'Removing the test vm'
