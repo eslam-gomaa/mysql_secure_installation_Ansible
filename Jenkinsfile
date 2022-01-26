@@ -224,12 +224,12 @@ pipeline {
       steps {
         script {
           echo "Useful to save disk space"
-          sh """
+          sh '''
             for i in $(find home/orange/.vagrant.d/boxes/ -size +600M  2>/dev/null)
             do
-               rm $i -f
+              rm "$i" -f
             done
-          """
+          '''
         }
       }
     }
