@@ -65,17 +65,19 @@ pipeline {
     stage('Test Ubuntu 18.04') {
       steps {
         ubuntu_18_04.setStatus('running')
-        try {
-          echo 'Begin Testing'
-          sh 'vagrant up ubuntu_18_04'
-          ubuntu_18_04.setStatus('passed')
-          ubuntu_18_04.setColor('brightgreen')
+        script {
+          try {
+            echo 'Begin Testing'
+            sh 'vagrant up ubuntu_18_04'
+            ubuntu_18_04.setStatus('passed')
+            ubuntu_18_04.setColor('brightgreen')
           } catch (Exception err) {
-          ubuntu_18_04.setStatus('failed')
-          ubuntu_18_04.setColor('pink')
-          }
-        echo 'Removing the test vm'
-        sh 'vagrant destroy -f ubuntu_18_04'
+            ubuntu_18_04.setStatus('failed')
+            ubuntu_18_04.setColor('pink')
+            }
+          echo 'Removing the test vm'
+          sh 'vagrant destroy -f ubuntu_18_04'
+        }
       }
       error "Build failed"
     }
