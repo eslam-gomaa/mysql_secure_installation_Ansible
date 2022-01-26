@@ -136,7 +136,7 @@ pipeline {
             centos_7.setColor('brightgreen')
           } catch (Exception err) {
             centos_7.setStatus('failed')
-            centos_7.setColor('pink')
+            centos_7.setColor('red')
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -155,7 +155,7 @@ pipeline {
             centos_8.setColor('brightgreen')
           } catch (Exception err) {
             centos_8.setStatus('failed')
-            centos_8.setColor('pink')
+            centos_8.setColor('red')
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -174,7 +174,7 @@ pipeline {
             fedora34.setColor('brightgreen')
           } catch (Exception err) {
             fedora34.setStatus('failed')
-            fedora34.setColor('pink')
+            fedora34.setColor('red')
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -193,7 +193,7 @@ pipeline {
             debian10.setColor('brightgreen')
           } catch (Exception err) {
             debian10.setStatus('failed')
-            debian10.setColor('pink')
+            debian10.setColor('red')
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -212,7 +212,7 @@ pipeline {
             debian11.setColor('brightgreen')
           } catch (Exception err) {
             debian11.setStatus('failed')
-            debian11.setColor('pink')
+            debian11.setColor('red')
             // error "Build failed"
             }
           echo 'Removing the test vm'
