@@ -1,3 +1,6 @@
+def ubuntu_18_04 = addEmbeddableBadgeConfiguration(id: "ubuntu_18_04", subject: "Test_result")
+
+
 pipeline {
   agent { label 'kvm_lab' }
   stages {
@@ -61,12 +64,20 @@ pipeline {
     
     stage('Test Ubuntu 18.04') {
       steps {
-        echo 'Begin Testing'
-        sh 'vagrant up ubuntu_18_04'
-
+        ubuntu_18_04.setStatus('running')
+        try {
+          echo 'Begin Testing'
+          sh 'vagrant up ubuntu_18_04'
+          ubuntu_18_04.setStatus('passed')
+          ubuntu_18_04.setColor('brightgreen')
+          } catch (Exception err) {
+          ubuntu_18_04.setStatus('failed')
+          ubuntu_18_04.setColor('pink')
+          }
         echo 'Removing the test vm'
         sh 'vagrant destroy -f ubuntu_18_04'
       }
+      error "Build failed"
     }
     stage('Test Ubuntu 16.04') {
       steps {
