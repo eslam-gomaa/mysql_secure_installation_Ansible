@@ -140,7 +140,7 @@ Below, is a list of the tested distributions
 | fedora-34                      |            🆗                |          |
 | Debian 10 (buster)             |            🆗                |          |
 | Ubuntu 16.04                   |            🆗                | had to upgrade Ansible to a newer version (Related to example syntax NOT the module)|
-| Ubuntu 18.04                   |            https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=ubuntu_18_04                |          |
+| Ubuntu 18.04                   |            ![](https://jenkins.demo.devops-caffe.com/jenkins/buildStatus/icon?job=mysql_secure_installation_Ansible%2Fmaster&config=ubuntu_18_04)                |          |
 | Ubuntu 20.04                   |            🆗                |          |
 
 ---
