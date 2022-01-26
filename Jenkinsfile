@@ -1,4 +1,10 @@
-def ubuntu_18_04 = addEmbeddableBadgeConfiguration(id: "ubuntu_18_04", subject: "Test_result")
+def ubuntu_16_04 = addEmbeddableBadgeConfiguration(id: "ubuntu_16_04", subject: "Test Result")
+def ubuntu_18_04 = addEmbeddableBadgeConfiguration(id: "ubuntu_18_04", subject: "Test Result")
+def ubuntu_20_04 = addEmbeddableBadgeConfiguration(id: "ubuntu_20_04", subject: "Test Result")
+def centos_7 = addEmbeddableBadgeConfiguration(id: "centos_7", subject: "Test Result")
+def centos_8 = addEmbeddableBadgeConfiguration(id: "centos_8", subject: "Test Result")
+def fedora34 = addEmbeddableBadgeConfiguration(id: "fedora34", subject: "Test Result")
+def debian10 = addEmbeddableBadgeConfiguration(id: "debian10", subject: "Test Result")
 
 
 pipeline {
@@ -74,29 +80,49 @@ pipeline {
           } catch (Exception err) {
             ubuntu_18_04.setStatus('failed')
             ubuntu_18_04.setColor('pink')
+            // error "Build failed"
             }
           echo 'Removing the test vm'
           sh 'vagrant destroy -f ubuntu_18_04'
         }
-        error "Build failed"
       }
     }
     stage('Test Ubuntu 16.04') {
       steps {
-        echo 'Begin Testing'
-        sh 'vagrant up ubuntu_16_04'
-
-        echo 'Removing the test vm'
-        sh 'vagrant destroy -f ubuntu_16_04'
+        script {
+          ubuntu_16_04.setStatus('running')
+          try {
+            echo 'Begin Testing'
+            sh 'vagrant up ubuntu_16_04'
+            ubuntu_16_04.setStatus('passed')
+            ubuntu_16_04.setColor('brightgreen')
+          } catch (Exception err) {
+            ubuntu_16_04.setStatus('failed')
+            ubuntu_16_04.setColor('pink')
+            // error "Build failed"
+            }
+          echo 'Removing the test vm'
+          sh 'vagrant destroy -f ubuntu_16_04'
+        }
       }
     }
     stage('Test Ubuntu 20.04') {
       steps {
-        echo 'Begin Testing'
-        sh 'vagrant up ubuntu_20_04'
-
-        echo 'Removing the test vm'
-        sh 'vagrant destroy -f ubuntu_20_04'
+        script {
+          ubuntu_20_04.setStatus('running')
+          try {
+            echo 'Begin Testing'
+            sh 'vagrant up ubuntu_20_04'
+            ubuntu_20_04.setStatus('passed')
+            ubuntu_20_04.setColor('brightgreen')
+          } catch (Exception err) {
+            ubuntu_20_04.setStatus('failed')
+            ubuntu_20_04.setColor('pink')
+            // error "Build failed"
+            }
+          echo 'Removing the test vm'
+          sh 'vagrant destroy -f ubuntu_20_04'
+        }
       }
     }
     stage('Test CentOS 7') {
