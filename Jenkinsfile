@@ -55,7 +55,7 @@ pipeline {
         // to prevent a BUG that may prevent downloading the box from within the pipeline.
         script {
           sh '''
-          for image_name in "generic/ubuntu1804" "generic/ubuntu1604" "generic/ubuntu2004" "generic/centos8" "generic/centos7" "generic/fedora34"  "generic/debian10"
+          for image_name in "generic/ubuntu1804" "generic/ubuntu1604" "generic/ubuntu2004" "generic/centos8" "generic/centos7" "generic/fedora34"  "generic/debian10" "generic/debian11"
           do
               if ! vagrant box list | grep $image_name >/dev/null
               then
@@ -198,6 +198,25 @@ pipeline {
             }
           echo 'Removing the test vm'
           sh 'vagrant destroy -f debian10'
+        }
+      }
+    }
+    stage('Test Debian 11') {
+      steps {
+        script {
+          debian11.setStatus('running')
+          try {
+            echo 'Begin Testing'
+            sh 'vagrant up debian11'
+            debian11.setStatus('passed')
+            debian11.setColor('brightgreen')
+          } catch (Exception err) {
+            debian11.setStatus('failed')
+            debian11.setColor('pink')
+            // error "Build failed"
+            }
+          echo 'Removing the test vm'
+          sh 'vagrant destroy -f debian11'
         }
       }
     }

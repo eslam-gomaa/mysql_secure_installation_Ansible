@@ -95,7 +95,6 @@ Vagrant.configure("2") do |config|
         debian10.vm.provision "Install ansible", type: "shell", path: "test_scripts/install_ansible_debian10.sh", privileged: true
         debian10.vm.provision "Test mysql_secure_installation ansible module", type: "shell", path: "test_scripts/module_test.sh", privileged: true
       end
-  
 
     
 end
