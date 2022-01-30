@@ -26,7 +26,7 @@ pipeline {
         script {
           checkout([
                 $class: 'GitSCM',
-                branches: [[name: 'hotfix']],
+                branches: [[name: 'origin/hotfix']],
                 userRemoteConfigs: [[url: 'https://github.com/eslam-gomaa/mysql_secure_installation_Ansible.git']]
                 ])
         }
