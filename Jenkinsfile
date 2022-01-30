@@ -7,8 +7,10 @@ def fedora34 = addEmbeddableBadgeConfiguration(id: "fedora34", style: "flat", su
 def debian10 = addEmbeddableBadgeConfiguration(id: "debian10", style: "flat", subject: "Test Result")
 def debian11 = addEmbeddableBadgeConfiguration(id: "debian11", style: "flat", subject: "Test Result")
 
+// Specify Branch name (Otherwise it will scan all available branches)
+// https://www.jenkins.io/doc/book/pipeline/multibranch/#additional-environment-variables
+def BRANCH_NAME = 'hotfix'
 
-def BRANCH_NAME = 'hotfix' // Specify Branch name (Otherwise it will scan all available branches)
 pipeline {
   agent { label 'kvm_lab' }
   stages {
