@@ -279,7 +279,10 @@ pipeline {
       when { Image_Failed == false }
       when { branch "hotfix" }
       steps {
-        sh ''
+        sh '''
+        git add .
+        git commit -m "push to git"
+        '''
       }
     }
   }
