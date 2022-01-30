@@ -16,7 +16,7 @@ def BRANCH_NAME = 'hotfix'
 //       BRANCH_TO_BUILD = 'hotfix'
 //   }
 
-when { branch "master" }
+when { branch "hotfix" }
 pipeline {
   agent { label 'kvm_lab' }
   stages {
