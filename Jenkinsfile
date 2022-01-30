@@ -16,6 +16,7 @@ def debian11 = addEmbeddableBadgeConfiguration(id: "debian11", style: "flat", su
 //       BRANCH_TO_BUILD = 'hotfix'
 //   }
 
+// when { branch "hotfix" }
 pipeline {
   agent { label 'kvm_lab' }
   stages {
@@ -25,7 +26,7 @@ pipeline {
         script {
           checkout([
                 $class: 'GitSCM',
-                branches: [[name: 'hotfix']],
+                branches: [[name: 'origin/hotfix']],
                 userRemoteConfigs: [[url: 'https://github.com/eslam-gomaa/mysql_secure_installation_Ansible.git']]
                 ])
         }
