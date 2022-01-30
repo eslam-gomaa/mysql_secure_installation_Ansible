@@ -13,6 +13,7 @@ def BRANCH_NAME = 'hotfix'
 
 environment {
       BRANCH_NAME = 'hotfix'
+      BRANCH_TO_BUILD = 'hotfix'
   }
 
 pipeline {
