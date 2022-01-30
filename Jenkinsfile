@@ -8,7 +8,7 @@ def debian10 = addEmbeddableBadgeConfiguration(id: "debian10", style: "flat", su
 def debian11 = addEmbeddableBadgeConfiguration(id: "debian11", style: "flat", subject: "Test Result")
 
 
-def BRANCH_NAME = 'hotfix'
+def BRANCH_NAME = 'hotfix' // Specify Branch name (Otherwise it will scan all available branches)
 pipeline {
   agent { label 'kvm_lab' }
   stages {
