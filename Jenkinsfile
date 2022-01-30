@@ -21,6 +21,7 @@ pipeline {
   agent { label 'kvm_lab' }
   stages {
     stage('Clone') {
+      when { branch "hotfix" }
       steps {
         script {
           checkout([
