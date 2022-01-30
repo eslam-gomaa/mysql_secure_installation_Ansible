@@ -17,7 +17,6 @@
   package:
     name:
       - python3-pymysql
-      - python-pymysql
   when: (ansible_distribution == 'Debian' and ansible_distribution_major_version | int == 11)
 
 - name: Install python-pymysql on Debian family  (< 20)
