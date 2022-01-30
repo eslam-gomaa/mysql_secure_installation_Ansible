@@ -37,6 +37,7 @@ pipeline {
     //   }
     // }
     stage('Post clone step') {
+      when { branch "hotfix" }
       steps {
         script {
           echo "Changing the owner & permissions of .vagrant directory"
@@ -55,6 +56,7 @@ pipeline {
       }
     }
     stage('Destroy old test VMs') {
+      when { branch "hotfix" }
       steps {
         script {
           echo "Double check that old test vm's are cleared"
@@ -71,6 +73,7 @@ pipeline {
       }
     }
     stage('Download boxs that don\'t exist') {
+      when { branch "hotfix" }
       steps {
         // Add any new box here to download it before running the tests
         // to prevent a BUG that may prevent downloading the box from within the pipeline.
@@ -90,6 +93,7 @@ pipeline {
     }
     
     stage('Test Ubuntu 18.04') {
+      when { branch "hotfix" }
       steps {
         script {
           ubuntu_18_04.setStatus('running')
@@ -109,6 +113,7 @@ pipeline {
       }
     }
     stage('Test Ubuntu 16.04') {
+      when { branch "hotfix" }
       steps {
         script {
           ubuntu_16_04.setStatus('running')
@@ -128,6 +133,7 @@ pipeline {
       }
     }
     stage('Test Ubuntu 20.04') {
+      when { branch "hotfix" }
       steps {
         script {
           ubuntu_20_04.setStatus('running')
@@ -147,6 +153,7 @@ pipeline {
       }
     }
     stage('Test CentOS 7') {
+      when { branch "hotfix" }
       steps {
         script {
           centos_7.setStatus('running')
@@ -166,6 +173,7 @@ pipeline {
       }
     }
     stage('Test CentOS 8') {
+      when { branch "hotfix" }
       steps {
         script {
           centos_8.setStatus('running')
@@ -185,6 +193,7 @@ pipeline {
       }
     }
     stage('Test Fedora 34') {
+      when { branch "hotfix" }
       steps {
         script {
           fedora34.setStatus('running')
@@ -204,6 +213,7 @@ pipeline {
       }
     }
     stage('Test Debian 10') {
+      when { branch "hotfix" }
       steps {
         script {
           debian10.setStatus('running')
@@ -223,6 +233,7 @@ pipeline {
       }
     }
     stage('Test Debian 11') {
+      when { branch "hotfix" }
       steps {
         script {
           debian11.setStatus('running')
@@ -242,6 +253,7 @@ pipeline {
       }
     }
     stage('Post pipeline: clear cached vagrant boxes') {
+      when { branch "hotfix" }
       steps {
         script {
           echo "Useful to save disk space"
