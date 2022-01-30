@@ -9,7 +9,7 @@ def debian11 = addEmbeddableBadgeConfiguration(id: "debian11", style: "flat", su
 
 // Specify Branch name (Otherwise it will scan all available branches)
 // https://www.jenkins.io/doc/book/pipeline/multibranch/#additional-environment-variables
-// def BRANCH_NAME = 'hotfix'
+def Image_Failed = false
 
 // environment {
 //       BRANCH_NAME = 'hotfix'
@@ -106,6 +106,7 @@ pipeline {
           } catch (Exception err) {
             ubuntu_18_04.setStatus('failed')
             ubuntu_18_04.setColor('pink')
+            Image_Failed = true
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -126,6 +127,7 @@ pipeline {
           } catch (Exception err) {
             ubuntu_16_04.setStatus('failed')
             ubuntu_16_04.setColor('pink')
+            Image_Failed = true
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -146,6 +148,7 @@ pipeline {
           } catch (Exception err) {
             ubuntu_20_04.setStatus('failed')
             ubuntu_20_04.setColor('pink')
+            Image_Failed = true
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -166,6 +169,7 @@ pipeline {
           } catch (Exception err) {
             centos_7.setStatus('failed')
             centos_7.setColor('pink')
+            Image_Failed = true
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -186,6 +190,7 @@ pipeline {
           } catch (Exception err) {
             centos_8.setStatus('failed')
             centos_8.setColor('pink')
+            Image_Failed = true
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -206,6 +211,7 @@ pipeline {
           } catch (Exception err) {
             fedora34.setStatus('failed')
             fedora34.setColor('pink')
+            Image_Failed = true
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -226,6 +232,7 @@ pipeline {
           } catch (Exception err) {
             debian10.setStatus('failed')
             debian10.setColor('pink')
+            Image_Failed = true
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -246,6 +253,7 @@ pipeline {
           } catch (Exception err) {
             debian11.setStatus('failed')
             debian11.setColor('pink')
+            Image_Failed = true
             // error "Build failed"
             }
           echo 'Removing the test vm'
@@ -265,6 +273,13 @@ pipeline {
             done
           '''
         }
+      }
+    }
+    stage('Git pull Requst') {
+      when { Image_Failed == false }
+      when { branch "hotfix" }
+      steps {
+        sh ''
       }
     }
   }
