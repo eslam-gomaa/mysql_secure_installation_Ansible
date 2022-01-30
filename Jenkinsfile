@@ -9,22 +9,33 @@ def debian11 = addEmbeddableBadgeConfiguration(id: "debian11", style: "flat", su
 
 // Specify Branch name (Otherwise it will scan all available branches)
 // https://www.jenkins.io/doc/book/pipeline/multibranch/#additional-environment-variables
-def BRANCH_NAME = 'hotfix'
+// def BRANCH_NAME = 'hotfix'
 
 // environment {
 //       BRANCH_NAME = 'hotfix'
 //       BRANCH_TO_BUILD = 'hotfix'
 //   }
 
-when { branch "hotfix" }
+// when { branch "hotfix" }
 pipeline {
   agent { label 'kvm_lab' }
   stages {
     stage('Clone') {
       steps {
-        git(url: 'https://github.com/eslam-gomaa/mysql_secure_installation_Ansible.git', branch: 'hotfix', credentialsId: 'github_id')
+        script {
+          checkout([
+                $class: 'GitSCM',
+                branches: [[name: 'hotfix']],
+                userRemoteConfigs: [[url: 'https://github.com/eslam-gomaa/mysql_secure_installation_Ansible.git']]
+                ])
+        }
       }
     }
+    // stage('Clone') {
+    //   steps {
+    //     git(url: 'https://github.com/eslam-gomaa/mysql_secure_installation_Ansible.git', branch: 'hotfix', credentialsId: 'github_id')
+    //   }
+    // }
     stage('Post clone step') {
       steps {
         script {
