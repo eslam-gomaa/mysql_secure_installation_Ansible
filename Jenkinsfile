@@ -11,11 +11,12 @@ def debian11 = addEmbeddableBadgeConfiguration(id: "debian11", style: "flat", su
 // https://www.jenkins.io/doc/book/pipeline/multibranch/#additional-environment-variables
 def BRANCH_NAME = 'hotfix'
 
-environment {
-      BRANCH_NAME = 'hotfix'
-      BRANCH_TO_BUILD = 'hotfix'
-  }
+// environment {
+//       BRANCH_NAME = 'hotfix'
+//       BRANCH_TO_BUILD = 'hotfix'
+//   }
 
+when { branch "master" }
 pipeline {
   agent { label 'kvm_lab' }
   stages {
