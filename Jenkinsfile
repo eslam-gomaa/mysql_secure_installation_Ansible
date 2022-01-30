@@ -16,11 +16,11 @@ def debian11 = addEmbeddableBadgeConfiguration(id: "debian11", style: "flat", su
 //       BRANCH_TO_BUILD = 'hotfix'
 //   }
 
-// when { branch "hotfix" }
 pipeline {
   agent { label 'kvm_lab' }
   stages {
     stage('Clone') {
+      when { branch "hotfix" }
       steps {
         script {
           checkout([
