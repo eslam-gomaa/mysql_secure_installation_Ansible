@@ -5,7 +5,7 @@ pipeline {
   stages {
     stage('Clone') {
       steps {
-        git(url: 'https://github.com/eslam-gomaa/mysql_secure_installation_Ansible.git', branch: 'hotfix', credentialsId: 'github_id')
+        git(url: 'https://github.com/eslam-gomaa/mysql_secure_installation_Ansible.git', branch: 'hotfix', credentialsId: 'github_id', changelog: true)
       }
     }
 
