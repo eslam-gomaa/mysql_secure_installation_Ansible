@@ -149,6 +149,7 @@ stderr:
 import re
 import pymysql as mysql
 from itertools import chain
+from packaging import version
 import os
 
 def runcommand(cmd):
@@ -318,7 +319,7 @@ def mysql_secure_installation(login_password, new_password, user='root', login_h
 
             # Get MySQL Version
             mysql_version_n = re.findall("[0-9]+.[0-9]+", mysql_version['stdout'])
-            if float(mysql_version_n[0]) >= 10.4:
+            if version.parse(mysql_version_n[0]) >= version.parse("10.4"):
                 global mysql_version_above_10_3
                 mysql_version_above_10_3 = True
 
